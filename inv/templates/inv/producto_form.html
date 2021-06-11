@@ -1,0 +1,51 @@
+{% block page_content %}
+<!-- Earnings (Monthly) Card Example -->
+
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+        {% if obj %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:producto_edit' obj.pk %}">
+            <!-- Agregar token de seguridad a los formularios -->
+        {% else %}
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:producto_new' %}">
+        {% endif %}
+            {% csrf_token %}
+                {% if obj %}
+                <!-- si viene un objeto se trata de una actualizacion -->
+                <div class="card border-left-warning shadow h-100 py-2">
+                {% else %}
+                <div class="card border-left-primary shadow h-100 py-2">
+                {% endif %}
+                    <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="font-weight-bold text-primary mb-1">
+                                {% if obj%}
+                                    Editar
+                                {% else %}
+                                    Agregar
+                                {% endif %}    
+                                    Producto                        
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="row">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <di class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary"><span>Guardar</span></button>
+                                    <a href="{% url 'inv:producto_list' %}" class="btn btn-danger"><span>Cancelar</span></a>
+                                </div>
+                            </di>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block js_page %}
+{% endblock %}

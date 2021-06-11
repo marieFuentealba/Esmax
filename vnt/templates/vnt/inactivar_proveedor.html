@@ -1,0 +1,71 @@
+
+<!-- Earnings (Monthly) Card Example -->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form method="POST" role="form">
+            {% csrf_token %}
+            <!-- Pending Requests Card Example -->
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">                    
+                        <div class="col-md-12">
+                            <div class="modal-title text-primari mb-1">  <i class="fas fa-comments fa-2x text-gray-300"></i>   ¿Deseas Inactivar {{ obj.descripcion }} ?</div>
+                          
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="btnInactivar" class="btn btn-primary">Aceptar</button>
+                            <a href="{% url 'vnt:proveedores_list' %}" class="btn btn-danger"><span>Cancelar</span></a>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+    
+      var token = $('input[name=csrfmiddlewaretoken]').val();
+      $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                    xhr.setRequestHeader("X-CSRFToken", token);
+                }
+            }
+        });
+    
+      $("#btnInactivar").click(function(e){
+          e.preventDefault();
+          //alert("Probando");
+    
+          var id = {{ obj.id }};
+          var template="{% url 'vnt:proveedor_inactivar' obj.id %}";
+          //template += id;
+          var data = {"id":id};
+          data = JSON.stringify(data);
+    
+          $.ajax({
+            type: "POST",
+            url: template,
+            data: data,
+            beforeSend: function(xhr,settings){
+              $.ajaxSettings.beforeSend(xhr,settings);
+            },
+            success: function(response){
+              console.log(response);
+              cerrar_modal();
+              //alert(response);
+              var tipo=(response.startsWith('Proveedor no existe') ? 'red':'green' );
+              //mensaje(response,tipo);
+              location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrow){
+              console.log(textStatus, errorThrow);
+              //mensaje(errorThrow,'red');
+              cerrar_modal();
+            }
+          });
+      });
+    
+    });
+    </script>
+

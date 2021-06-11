@@ -1,0 +1,110 @@
+.bg-login-image {
+    background: url("/static/base/img/esmax.png");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.bg-gradient-primary {
+    background-color: #0F5AB4!important;
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#0F5AB4),to(#224abe));
+
+}
+.btn-primary {
+    color: #fff;
+    background-color: #2764ae;
+    border-color: #2764ae;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #135ba3;
+    border-color: #135ba3;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #135ba3;
+    border-color: #135ba3;
+}
+.text-primary {
+    color: #1059b4!important;
+}
+.border-left-primary {
+    border-left: .25rem solid #0f5ab4!important;
+}
+
+.container-xl {
+    max-width: 95%!important;
+}
+
+.card-body {
+    overflow: auto;
+}
+.card-header {
+    color: #fff;
+    background-color: #1655b8;
+    border-bottom: 1px solid #1655b8;
+}
+.page-item.active .page-link {
+    background-color: #3e9fcf;
+    border-color: #3e9fcf;
+}
+.form-control{
+    margin: 5px;
+}
+
+p{
+    margin: 12px;
+}
+
+.sidebar .nav-item .nav-link .img-profile, .topbar .nav-item .nav-link .img-profile {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.bd-example {
+    padding: 1.5rem;
+    margin-right: 0;
+    margin-left: 0;
+    border-width: 1px;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    position: relative;
+    border: solid 2px #dee2e6;
+   
+}
+
+.encabezado{
+    background-color: #1b51bb2b;
+    font-weight: bold;
+}
+.thead-table{
+    background-color: #b0b1b3;
+    color: #fff;
+}
+.box-calculo{
+    width: 26%;
+    background-color: #d0d9ec;
+    padding: 12px;
+    border-radius: 11px;
+    margin: 0 auto;
+}
+.numero{
+    background-color: white;
+    border-radius: 7px;
+    /* padding: 12px; */
+    padding-top: 0px;
+    color: #85888e;
+    padding-left: 20px;
+    padding-bottom: 0px;
+    font-weight: bolder;
+    font-size: 31px;
+}
+
+
+@media (min-width: 1200px){
+    .container {
+        max-width: 1413px;
+    }
+
+}
+
+
+

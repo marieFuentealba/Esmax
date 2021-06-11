@@ -1,0 +1,29 @@
+
+
+{% block page_content %}
+<!-- Earnings (Monthly) Card Example -->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form method="POST" role="form" action="{% url 'inv:producto_delete'  obj.pk %}">
+            {% csrf_token %}
+            <!-- Pending Requests Card Example -->
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">                    
+                        <div class="col-md-12">
+                            <div class="modal-title text-primari mb-1">  <i class="fas fa-comments fa-2x text-gray-300"></i>   ¿Deseas Eliminar {{ obj.descripcion }} ?</div>
+                          
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                            <a href="{% url 'inv:producto_list' %}" class="btn btn-danger"><span>Cancelar</span></a>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% block js_page %}
+{% endblock %}

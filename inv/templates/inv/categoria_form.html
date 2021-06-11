@@ -1,0 +1,93 @@
+{% block page_content %}
+<!-- Earnings (Monthly) Card Example -->
+<div class="modal-dialog">
+    <div class="modal-content">
+
+        {% if obj %}
+        <form method="POST" id="formCategoria" role="form" action="{% url 'inv:categoria_edit' obj.pk %}">
+            <!-- Agregar token de seguridad a los formularios -->
+        {% else %}
+        <form method="POST" role="form" id="formCategoria" action="{% url 'inv:categoria_new' %}">
+        {% endif %}
+            {% csrf_token %}
+
+                {% if obj %}
+                       <!-- si viene un objeto se trata de una actualizacion -->
+                    <div class="card border-left-warning shadow h-100 py-2">
+                    {% else %}
+                    <div class="card border-left-primary shadow h-100 py-2">
+                    {% endif %}
+                        <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="font-weight-bold text-primary mb-1">
+                                    {% if obj%}
+                                        Editar
+                                    {% else %}
+                                        Nueva 
+                                    {% endif %}    
+                                        Categoría                        
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="input-group">
+                                            <input type="text" name="descripcion" maxlength="100" class="form-control" required id="id_descripcion" placeholder="Descripcion"
+                                            value="{% if obj%} {{ obj.descripcion }} {% endif %}">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <label for="id_estado">Estado</label>
+                                            <input type="checkbox" name="estado" class="form-control" id="id_estado" {% if obj.estado %} checked {% endif %} >
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary "><span>Guardar</span></button>
+                                    <a href="{% url 'inv:categoria_list' %}" class="btn btn-danger"><span>Cancelar</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+</form>
+    </div>
+</div>
+
+
+
+{% endblock %}
+{% block js_page %}
+<script>
+    $(function() {
+    
+        var url = $("#formCategoria").attr("action");
+        var token = jQuery("[name=csrfmiddlewaretoken]").val();
+        
+        $("form").submit(function(e){
+            e.preventDefault();
+            // alert(token);
+            var formData = $("form").serializeArray();
+            // console.log(formData);
+            $.ajax({
+                url:url,
+                method:"POST",
+                headers: {'X-CSRFToken': token },
+                data: formData
+            })
+            .done(function(r,textStatus,xhr){
+                if(xhr.status=200){
+                    location.reload(true);
+                }
+                else{
+                    mensaje(textStatus);
+                }
+            }).fail(function (error) {
+                    mensaje(error.responseText);
+            });
+        });
+    });
+</script>
+{% endblock %}

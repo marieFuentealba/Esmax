@@ -1,0 +1,82 @@
+{% block page_content %}
+<!-- Earnings (Monthly) Card Example -->
+
+<div class="modal-dialog modal-xl">
+    <div class="modal-content">
+        {% if obj %}
+        <form method="POST" id="formProveedor" role="form" class="form-inline" action="{% url 'vnt:proveedores_edit' obj.pk %}">
+            <!-- Agregar token de seguridad a los formularios -->
+        {% else %}
+        <form method="POST" id="formProveedor" role="form" class="form-inline" action="{% url 'vnt:proveedores_new' %}">
+        {% endif %}
+            {% csrf_token %}
+                {% if obj %}
+                <!-- si viene un objeto se trata de una actualizacion -->
+                <div class="card border-left-warning shadow h-100 py-2">
+                {% else %}
+                <div class="card border-left-primary shadow h-100 py-2">
+                {% endif %}
+                    <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="font-weight-bold text-primary mb-1">
+                                {% if obj%}
+                                    Editar
+                                {% else %}
+                                    Agregar
+                                {% endif %}    
+                                    Proveedor                       
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="row">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <di class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary"><span>Guardar</span></button>
+                                    <a href="{% url 'vnt:proveedores_list' %}" class="btn btn-danger"><span>Cancelar</span></a>
+                                </div>
+                            </di>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% block js_page %}
+<script>
+    $(function() {
+    
+        var url = $("#formProveedor").attr("action");
+        var token = jQuery("[name=csrfmiddlewaretoken]").val();
+        
+        $("form").submit(function(e){
+            e.preventDefault();
+            // alert(token);
+            var formData = $("form").serializeArray();
+            // console.log(formData);
+            $.ajax({
+                url:url,
+                method:"POST",
+                headers: {'X-CSRFToken': token },
+                data: formData
+            })
+            .done(function(r,textStatus,xhr){
+                if(xhr.status=200){
+                    location.reload(true);
+                }
+                else{
+                    mensaje(textStatus);
+                }
+            }).fail(function (error) {
+                    mensaje(error.responseText);
+            });
+        });
+    });
+</script>
+{% endblock %}
