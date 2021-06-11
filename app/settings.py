@@ -94,10 +94,21 @@ WSGI_APPLICATION = 'app.wsgi.application'
  #       'PASSWORD':'root',
  #       'PORT':5433,
 
+#DATABASES = {
+ #   'default': {
+ #       'ENGINE': 'django.db.backends.postgresql_psycopg2',
+  #      'DATABASE_URL': 'postgres://ehbqndzyndsfim:22fed979dbfca8348c8b9b106119940854b259eccb3f22829e706d1a13fc4b61@ec2-34-193-112-164.compute-1.amazonaws.com:5432/dbv57m5h7gba3c'
+   # }
+#}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'DATABASE_URL': 'postgres://ehbqndzyndsfim:22fed979dbfca8348c8b9b106119940854b259eccb3f22829e706d1a13fc4b61@ec2-34-193-112-164.compute-1.amazonaws.com:5432/dbv57m5h7gba3c'
+        'NAME': 'postgres',
+        'HOST': 'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'PORT': 5433
     }
 }
 
