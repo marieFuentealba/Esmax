@@ -105,6 +105,21 @@ p{
     }
 
 }
+.btn-txt{
+    border-radius: 2.35rem!important;
+    margin-left: 6px;
+}
+.page-item.active .page-link {
+    background-color: #36b9cc!important;
+    border-color: #36b9cc!important;
+}
+.input-group-prepend {
+    margin-right: -6px!important;
+}
 
+.calendar {
+    height: 38px;
+    margin-top: 5px;
+}
 
 

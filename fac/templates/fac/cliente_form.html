@@ -4,10 +4,10 @@
 <div class="modal-dialog modal-xl">
     <div class="modal-content">
         {% if obj %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'fac:cliente_edit' obj.pk %}">
+        <form method="POST" role="form" class="" action="{% url 'fac:cliente_edit' obj.pk %}">
             <!-- Agregar token de seguridad a los formularios -->
         {% else %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'fac:cliente_new' %}">
+        <form method="POST" role="form" class="" action="{% url 'fac:cliente_new' %}">
         {% endif %}
             {% csrf_token %}
                 {% if obj %}
@@ -34,8 +34,8 @@
                             <div class="dropdown-divider"></div>
                             <di class="row">
                                 <div class="col">
-                                    <button type="submit" class="btn btn-primary"><span>Guardar</span></button>
-                                    <a href="{% url 'fac:cliente_list' %}" class="btn btn-danger"><span>Cancelar</span></a>
+                                    <button type="submit" class="btn btn-info btn-txt"><span>Guardar</span></button>
+                                    <a href="{% url 'fac:cliente_list' %}" class="btn btn-danger btn-txt"><span>Cancelar</span></a>
                                 </div>
                             </di>
                         </div>

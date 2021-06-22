@@ -8,26 +8,28 @@
         <div class="card shadow mb-4">
           <!-- Card Header - Dropdown -->
           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Listado de Clientes</h6>
+            <h6 class="m-0 font-weight-bold">Listado de Clientes</h6>
             <div class="dropdown no-arrow">
-              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <!--  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
               </a>
               <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                 <div class="dropdown-header">Acciones:</div>
                 <a class="dropdown-item" href="#"  onclick="return mostrar_modal('{% url 'fac:cliente_new' %}')" ><i class="fas fa-plus"></i> Nuevo</a>
-              </div>
+              </div>-->
             </div>
           </div>
           <!-- Card Body -->
           <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-info float-right btn-txt" href="#"  onclick="return mostrar_modal('{% url 'fac:cliente_new' %}')" ><i class="fas fa-plus"></i> Agregar Cliente</a>
+              </div>
+            </div>        
+          <br>
             {% if not obj %}
             <div class="alert alert-info">No Hay Clientes</div>
             {% endif %}
-            <div class="buttons-toolbar">
-                <a class="dropdown-item" onclick="return mostrar_modal('{% url 'fac:cliente_new' %}')" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
-            </div>
-
             <table 
               id="table"
               data-toggle="table"

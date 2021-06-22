@@ -15,6 +15,9 @@ urlpatterns = [
     path('ventas/new', ventas, name='ventas_new'),
     path('ventas/edit/<int:venta_id>',ventas, name="ventas_edit"),
 
+    path('ventas/listado', reporte_ventas, name='ventas_print_all'),
+    path('ventas/<int:venta_id>/imprimir', imprimir_venta,name="ventas_print_one"),
+
 
  
 ]

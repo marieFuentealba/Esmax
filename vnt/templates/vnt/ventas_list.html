@@ -12,19 +12,28 @@
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold">Lista de Ventas</h6>
             <div class="dropdown no-arrow">
-            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <!--<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                <div class="dropdown-header">Acciones</div>
+               <div class="dropdown-header">Acciones</div>
                 <a class="dropdown-item" href="{% url 'vnt:ventas_new' %}" ><i class="fas fa-plus"></i> Agregar</a>
-                <a class="dropdown-item" href="{% url 'vnt:ventas_print_all' %}" ><i class="fas fa-print"></i> Listado</a>
-            </div>
+                <a class="dropdown-item" href="{% url 'vnt:ventas_print_all' %}" target="_blank"><i class="fas fa-print"></i> Listado</a>
+            </div>-->
             </div>
         </div>
         <!-- Card Body -->
     
         <div class="card-body">
+
+          <div class="row">
+            <div class="col">
+              <a class="btn btn-info float-right btn-txt" href="{% url 'vnt:ventas_new' %}" ><i class="fas fa-plus"></i> Agregar Venta</a>
+              <a class="btn btn-info float-right btn-txt" href="{% url 'vnt:ventas_print_all' %}" target="_blank"><i class="fas fa-print"></i> Imprimir Listado Ventas</a>
+            </div>
+          </div>        
+        <br>
+
             {% if not obj %}
             <div class="alert alert-info">No hay Ventas</div> 
             {% else %} 
@@ -56,8 +65,8 @@
                             <td>{{ item.total }}</td>
                             <td>{{ item.estado|yesno:"Activo, Inactivo"}}</td>
                           <td>
-                                <a href="{% url 'vnt:ventas_edit' item.id %}" class="btn btn-primary btn-circle" role="button" data-toggle="tooltip" data-placement="top" title="Editar"><i class="far fa-edit"></i></a>
-                                <a  href="{% url 'vnt:ventas_print' item.id %}"  class="btn btn-primary btn-circle" role="button" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-print"></i></a>
+                                <a href="{% url 'vnt:ventas_edit' item.id %}" class="btn btn-warning btn-circle" role="button" data-toggle="tooltip" data-placement="top" title="Editar"><i class="far fa-edit"></i></a>
+                                <a  href="{% url 'vnt:ventas_print_one' item.id %}" target="_blank" class="btn btn-warning btn-circle" role="button" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fas fa-print"></i></a>
                             </td>
                         </tr>
                     {% endfor %}

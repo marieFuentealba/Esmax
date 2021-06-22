@@ -1,7 +1,9 @@
 {% extends 'base/base.html'%}
 {% block page_content %}
+
     <form method="post" id="frmVentas">
         {% csrf_token %}
+        <div class="col-xl-2"></div>
         <div class="col-xl-8 col-md-8 mb-12">
             {% if encabezado %}
             <div class="card border-left-warning shadow h-100 py-2">
@@ -11,7 +13,7 @@
                 <div class="card-body ">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <div class="text-xs font-weight-bold text-primary mb-1">
                                     {% if encabezado %} Editar {% else %} Nueva {% endif %} Venta
                                 </div>
                                 <div class="dropdown-divider"></div>
@@ -148,8 +150,8 @@
                                         <br>
                                         <div class="row">
                                             <div class="col">
-                                                <button type="submit" class="btn btn-primary"><span class="fa fa-save"></span> Guardar</button>
-                                                <button type="button"  onclick="limpiarCampos();" class="btn btn-primary"><i class="fa fa-minus-circle" aria-hidden="true"></i> Limpiar Campos</button>
+                                                <button type="submit" class="btn btn-info"><span class="fa fa-save"></span> Guardar</button>
+                                                <button type="button"  onclick="limpiarCampos();" class="btn btn-info"><i class="fa fa-minus-circle" aria-hidden="true"></i> Limpiar Campos</button>
                                                 <a href="{% url 'vnt:ventas_list' %}" class="btn btn-danger"><i class="far fa-hand-point-left"></i> Cancelar</a>
                                             </div>
                                         </div>

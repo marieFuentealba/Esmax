@@ -1,0 +1,2660 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+-- Started on 2021-06-08 22:10:26
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+--CREATE SCHEMA public;
+
+
+--ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- TOC entry 3297 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 208 (class 1259 OID 16427)
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+--ALTER TABLE public.auth_group OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16425)
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.auth_group_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3298 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 16437)
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.auth_group_permissions OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16435)
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.auth_group_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3299 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 16419)
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+--ALTER TABLE public.auth_permission OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16417)
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.auth_permission_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3300 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- TOC entry 212 (class 1259 OID 16445)
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+--ALTER TABLE public.auth_user OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 16455)
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.auth_user_groups OWNER TO postgres;
+
+--
+-- TOC entry 213 (class 1259 OID 16453)
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.auth_user_groups_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3301 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 16443)
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.auth_user_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3302 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- TOC entry 216 (class 1259 OID 16463)
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.auth_user_user_permissions OWNER TO postgres;
+
+--
+-- TOC entry 215 (class 1259 OID 16461)
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3303 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- TOC entry 218 (class 1259 OID 16523)
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+--ALTER TABLE public.django_admin_log OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16521)
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.django_admin_log_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3304 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- TOC entry 204 (class 1259 OID 16409)
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+--ALTER TABLE public.django_content_type OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16407)
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.django_content_type_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3305 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- TOC entry 202 (class 1259 OID 16398)
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+--ALTER TABLE public.django_migrations OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16396)
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.django_migrations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3306 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- TOC entry 219 (class 1259 OID 16554)
+-- Name: django_session; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+--ALTER TABLE public.django_session OWNER TO postgres;
+
+--
+-- TOC entry 235 (class 1259 OID 16723)
+-- Name: fac_cliente; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fac_cliente (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    nombres character varying(100) NOT NULL,
+    apellidos character varying(100) NOT NULL,
+    celular character varying(20),
+    tipo character varying(10) NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.fac_cliente OWNER TO postgres;
+
+--
+-- TOC entry 234 (class 1259 OID 16721)
+-- Name: fac_cliente_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.fac_cliente_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.fac_cliente_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3307 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: fac_cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.fac_cliente_id_seq OWNED BY public.fac_cliente.id;
+
+
+--
+-- TOC entry 239 (class 1259 OID 16864)
+-- Name: fac_facturadet; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fac_facturadet (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    cantidad bigint NOT NULL,
+    precio double precision NOT NULL,
+    sub_total double precision NOT NULL,
+    descuento double precision NOT NULL,
+    total double precision NOT NULL,
+    factura_id integer NOT NULL,
+    producto_id integer NOT NULL,
+    usuario_crea_id integer,
+    usuario_modifica_id integer
+);
+
+
+--ALTER TABLE public.fac_facturadet OWNER TO postgres;
+
+--
+-- TOC entry 238 (class 1259 OID 16862)
+-- Name: fac_facturadet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.fac_facturadet_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.fac_facturadet_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3308 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: fac_facturadet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.fac_facturadet_id_seq OWNED BY public.fac_facturadet.id;
+
+
+--
+-- TOC entry 237 (class 1259 OID 16737)
+-- Name: fac_facturaenc; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.fac_facturaenc (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    fecha timestamp with time zone NOT NULL,
+    sub_total double precision NOT NULL,
+    descuento double precision NOT NULL,
+    total double precision NOT NULL,
+    cliente_id integer NOT NULL,
+    usuario_crea_id integer,
+    usuario_modifica_id integer,
+    impuesto double precision NOT NULL
+);
+
+
+--ALTER TABLE public.fac_facturaenc OWNER TO postgres;
+
+--
+-- TOC entry 236 (class 1259 OID 16735)
+-- Name: fac_facturaenc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.fac_facturaenc_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.fac_facturaenc_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3309 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: fac_facturaenc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.fac_facturaenc_id_seq OWNED BY public.fac_facturaenc.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 16631)
+-- Name: inv_bitacora; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inv_bitacora (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    codigo character varying(20) NOT NULL,
+    numero_documento integer NOT NULL,
+    numero_viaje integer NOT NULL,
+    fecha_recepcion date,
+    hora_recepcion date,
+    ubicacion character varying(200) NOT NULL,
+    inicial integer NOT NULL,
+    final integer NOT NULL,
+    litros_recibidos integer NOT NULL,
+    diferencia integer NOT NULL,
+    tk integer NOT NULL,
+    temperatura integer NOT NULL,
+    api double precision NOT NULL,
+    descripcion character varying(200) NOT NULL,
+    "subCategoria_id" integer NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.inv_bitacora OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 16629)
+-- Name: inv_bitacora_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inv_bitacora_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.inv_bitacora_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3310 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: inv_bitacora_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inv_bitacora_id_seq OWNED BY public.inv_bitacora.id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 16566)
+-- Name: inv_categoria; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inv_categoria (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    descripcion character varying(100) NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.inv_categoria OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 16564)
+-- Name: inv_categoria_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inv_categoria_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.inv_categoria_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3311 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: inv_categoria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inv_categoria_id_seq OWNED BY public.inv_categoria.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 16606)
+-- Name: inv_producto; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inv_producto (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    codigo character varying(20) NOT NULL,
+    codigo_barra character varying(50) NOT NULL,
+    descripcion character varying(200) NOT NULL,
+    precio double precision NOT NULL,
+    existencia integer NOT NULL,
+    fecha_carga date,
+    cantidad integer NOT NULL,
+    comentario character varying(200) NOT NULL,
+    "subCategoria_id" integer NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.inv_producto OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 16604)
+-- Name: inv_producto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inv_producto_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.inv_producto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3312 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: inv_producto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inv_producto_id_seq OWNED BY public.inv_producto.id;
+
+
+--
+-- TOC entry 223 (class 1259 OID 16583)
+-- Name: inv_subcategoria; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.inv_subcategoria (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    descripcion character varying(100) NOT NULL,
+    categoria_id integer NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.inv_subcategoria OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 16581)
+-- Name: inv_subcategoria_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.inv_subcategoria_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.inv_subcategoria_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3313 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: inv_subcategoria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.inv_subcategoria_id_seq OWNED BY public.inv_subcategoria.id;
+
+
+--
+-- TOC entry 229 (class 1259 OID 16654)
+-- Name: vnt_proveedor; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vnt_proveedor (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    descripcion character varying(100) NOT NULL,
+    direccion character varying(250),
+    contacto character varying(100) NOT NULL,
+    telefono character varying(10),
+    email character varying(250) NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.vnt_proveedor OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 16652)
+-- Name: vnt_proveedor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vnt_proveedor_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.vnt_proveedor_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3314 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: vnt_proveedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vnt_proveedor_id_seq OWNED BY public.vnt_proveedor.id;
+
+
+--
+-- TOC entry 233 (class 1259 OID 16685)
+-- Name: vnt_ventasdet; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vnt_ventasdet (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    cantidad bigint NOT NULL,
+    precio_prv double precision NOT NULL,
+    sub_total double precision NOT NULL,
+    descuento double precision NOT NULL,
+    total double precision NOT NULL,
+    costo double precision NOT NULL,
+    producto_id integer NOT NULL,
+    uc_id integer NOT NULL,
+    venta_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.vnt_ventasdet OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1259 OID 16683)
+-- Name: vnt_ventasdet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vnt_ventasdet_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.vnt_ventasdet_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3315 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: vnt_ventasdet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vnt_ventasdet_id_seq OWNED BY public.vnt_ventasdet.id;
+
+
+--
+-- TOC entry 231 (class 1259 OID 16674)
+-- Name: vnt_ventasenc; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.vnt_ventasenc (
+    id integer NOT NULL,
+    estado boolean NOT NULL,
+    fc timestamp with time zone NOT NULL,
+    fm timestamp with time zone NOT NULL,
+    um integer,
+    fecha_venta date,
+    observacion text,
+    no_factura character varying(100) NOT NULL,
+    fecha_factura date,
+    sub_total double precision NOT NULL,
+    descuento double precision NOT NULL,
+    total double precision NOT NULL,
+    proveedor_id integer NOT NULL,
+    uc_id integer NOT NULL
+);
+
+
+--ALTER TABLE public.vnt_ventasenc OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 16672)
+-- Name: vnt_ventasenc_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.vnt_ventasenc_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--ALTER TABLE public.vnt_ventasenc_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 3316 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: vnt_ventasenc_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.vnt_ventasenc_id_seq OWNED BY public.vnt_ventasenc.id;
+
+
+--
+-- TOC entry 2972 (class 2604 OID 16430)
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- TOC entry 2973 (class 2604 OID 16440)
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2971 (class 2604 OID 16422)
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- TOC entry 2974 (class 2604 OID 16448)
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- TOC entry 2975 (class 2604 OID 16458)
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- TOC entry 2976 (class 2604 OID 16466)
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- TOC entry 2977 (class 2604 OID 16526)
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- TOC entry 2970 (class 2604 OID 16412)
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- TOC entry 2969 (class 2604 OID 16401)
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- TOC entry 2986 (class 2604 OID 16726)
+-- Name: fac_cliente id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_cliente ALTER COLUMN id SET DEFAULT nextval('public.fac_cliente_id_seq'::regclass);
+
+
+--
+-- TOC entry 2988 (class 2604 OID 16867)
+-- Name: fac_facturadet id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturadet ALTER COLUMN id SET DEFAULT nextval('public.fac_facturadet_id_seq'::regclass);
+
+
+--
+-- TOC entry 2987 (class 2604 OID 16740)
+-- Name: fac_facturaenc id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturaenc ALTER COLUMN id SET DEFAULT nextval('public.fac_facturaenc_id_seq'::regclass);
+
+
+--
+-- TOC entry 2982 (class 2604 OID 16634)
+-- Name: inv_bitacora id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_bitacora ALTER COLUMN id SET DEFAULT nextval('public.inv_bitacora_id_seq'::regclass);
+
+
+--
+-- TOC entry 2979 (class 2604 OID 16569)
+-- Name: inv_categoria id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_categoria ALTER COLUMN id SET DEFAULT nextval('public.inv_categoria_id_seq'::regclass);
+
+
+--
+-- TOC entry 2981 (class 2604 OID 16609)
+-- Name: inv_producto id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_producto ALTER COLUMN id SET DEFAULT nextval('public.inv_producto_id_seq'::regclass);
+
+
+--
+-- TOC entry 2980 (class 2604 OID 16586)
+-- Name: inv_subcategoria id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_subcategoria ALTER COLUMN id SET DEFAULT nextval('public.inv_subcategoria_id_seq'::regclass);
+
+
+--
+-- TOC entry 2983 (class 2604 OID 16657)
+-- Name: vnt_proveedor id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_proveedor ALTER COLUMN id SET DEFAULT nextval('public.vnt_proveedor_id_seq'::regclass);
+
+
+--
+-- TOC entry 2985 (class 2604 OID 16688)
+-- Name: vnt_ventasdet id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasdet ALTER COLUMN id SET DEFAULT nextval('public.vnt_ventasdet_id_seq'::regclass);
+
+
+--
+-- TOC entry 2984 (class 2604 OID 16677)
+-- Name: vnt_ventasenc id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasenc ALTER COLUMN id SET DEFAULT nextval('public.vnt_ventasenc_id_seq'::regclass);
+
+
+--
+-- TOC entry 3260 (class 0 OID 16427)
+-- Dependencies: 208
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_group VALUES (1, 'AreaFacturacion');
+INSERT INTO public.auth_group VALUES (2, 'SupervisorCaja');
+
+
+--
+-- TOC entry 3262 (class 0 OID 16437)
+-- Dependencies: 210
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_group_permissions VALUES (1, 1, 65);
+INSERT INTO public.auth_group_permissions VALUES (2, 1, 36);
+INSERT INTO public.auth_group_permissions VALUES (3, 1, 76);
+INSERT INTO public.auth_group_permissions VALUES (4, 1, 56);
+INSERT INTO public.auth_group_permissions VALUES (5, 1, 62);
+INSERT INTO public.auth_group_permissions VALUES (6, 1, 63);
+INSERT INTO public.auth_group_permissions VALUES (7, 2, 64);
+INSERT INTO public.auth_group_permissions VALUES (8, 2, 65);
+INSERT INTO public.auth_group_permissions VALUES (9, 2, 66);
+INSERT INTO public.auth_group_permissions VALUES (10, 2, 36);
+INSERT INTO public.auth_group_permissions VALUES (11, 2, 76);
+INSERT INTO public.auth_group_permissions VALUES (12, 2, 77);
+INSERT INTO public.auth_group_permissions VALUES (13, 2, 78);
+INSERT INTO public.auth_group_permissions VALUES (14, 2, 79);
+INSERT INTO public.auth_group_permissions VALUES (15, 2, 80);
+INSERT INTO public.auth_group_permissions VALUES (16, 2, 56);
+INSERT INTO public.auth_group_permissions VALUES (17, 2, 62);
+INSERT INTO public.auth_group_permissions VALUES (18, 2, 63);
+
+
+--
+-- TOC entry 3258 (class 0 OID 16419)
+-- Dependencies: 206
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_permission VALUES (1, 'Can add log entry', 1, 'add_logentry');
+INSERT INTO public.auth_permission VALUES (2, 'Can change log entry', 1, 'change_logentry');
+INSERT INTO public.auth_permission VALUES (3, 'Can delete log entry', 1, 'delete_logentry');
+INSERT INTO public.auth_permission VALUES (4, 'Can view log entry', 1, 'view_logentry');
+INSERT INTO public.auth_permission VALUES (5, 'Can add permission', 2, 'add_permission');
+INSERT INTO public.auth_permission VALUES (6, 'Can change permission', 2, 'change_permission');
+INSERT INTO public.auth_permission VALUES (7, 'Can delete permission', 2, 'delete_permission');
+INSERT INTO public.auth_permission VALUES (8, 'Can view permission', 2, 'view_permission');
+INSERT INTO public.auth_permission VALUES (9, 'Can add group', 3, 'add_group');
+INSERT INTO public.auth_permission VALUES (10, 'Can change group', 3, 'change_group');
+INSERT INTO public.auth_permission VALUES (11, 'Can delete group', 3, 'delete_group');
+INSERT INTO public.auth_permission VALUES (12, 'Can view group', 3, 'view_group');
+INSERT INTO public.auth_permission VALUES (13, 'Can add user', 4, 'add_user');
+INSERT INTO public.auth_permission VALUES (14, 'Can change user', 4, 'change_user');
+INSERT INTO public.auth_permission VALUES (15, 'Can delete user', 4, 'delete_user');
+INSERT INTO public.auth_permission VALUES (16, 'Can view user', 4, 'view_user');
+INSERT INTO public.auth_permission VALUES (17, 'Can add content type', 5, 'add_contenttype');
+INSERT INTO public.auth_permission VALUES (18, 'Can change content type', 5, 'change_contenttype');
+INSERT INTO public.auth_permission VALUES (19, 'Can delete content type', 5, 'delete_contenttype');
+INSERT INTO public.auth_permission VALUES (20, 'Can view content type', 5, 'view_contenttype');
+INSERT INTO public.auth_permission VALUES (21, 'Can add session', 6, 'add_session');
+INSERT INTO public.auth_permission VALUES (22, 'Can change session', 6, 'change_session');
+INSERT INTO public.auth_permission VALUES (23, 'Can delete session', 6, 'delete_session');
+INSERT INTO public.auth_permission VALUES (24, 'Can view session', 6, 'view_session');
+INSERT INTO public.auth_permission VALUES (25, 'Can add categoria', 7, 'add_categoria');
+INSERT INTO public.auth_permission VALUES (26, 'Can change categoria', 7, 'change_categoria');
+INSERT INTO public.auth_permission VALUES (27, 'Can delete categoria', 7, 'delete_categoria');
+INSERT INTO public.auth_permission VALUES (28, 'Can view categoria', 7, 'view_categoria');
+INSERT INTO public.auth_permission VALUES (29, 'Can add sub categoria', 8, 'add_subcategoria');
+INSERT INTO public.auth_permission VALUES (30, 'Can change sub categoria', 8, 'change_subcategoria');
+INSERT INTO public.auth_permission VALUES (31, 'Can delete sub categoria', 8, 'delete_subcategoria');
+INSERT INTO public.auth_permission VALUES (32, 'Can view sub categoria', 8, 'view_subcategoria');
+INSERT INTO public.auth_permission VALUES (33, 'Can add producto', 9, 'add_producto');
+INSERT INTO public.auth_permission VALUES (34, 'Can change producto', 9, 'change_producto');
+INSERT INTO public.auth_permission VALUES (35, 'Can delete producto', 9, 'delete_producto');
+INSERT INTO public.auth_permission VALUES (36, 'Can view producto', 9, 'view_producto');
+INSERT INTO public.auth_permission VALUES (37, 'Can add bitacora', 10, 'add_bitacora');
+INSERT INTO public.auth_permission VALUES (38, 'Can change bitacora', 10, 'change_bitacora');
+INSERT INTO public.auth_permission VALUES (39, 'Can delete bitacora', 10, 'delete_bitacora');
+INSERT INTO public.auth_permission VALUES (40, 'Can view bitacora', 10, 'view_bitacora');
+INSERT INTO public.auth_permission VALUES (41, 'Can add proveedor', 11, 'add_proveedor');
+INSERT INTO public.auth_permission VALUES (42, 'Can change proveedor', 11, 'change_proveedor');
+INSERT INTO public.auth_permission VALUES (43, 'Can delete proveedor', 11, 'delete_proveedor');
+INSERT INTO public.auth_permission VALUES (44, 'Can view proveedor', 11, 'view_proveedor');
+INSERT INTO public.auth_permission VALUES (45, 'Can add Detalle Venta', 12, 'add_ventasdet');
+INSERT INTO public.auth_permission VALUES (46, 'Can change Detalle Venta', 12, 'change_ventasdet');
+INSERT INTO public.auth_permission VALUES (47, 'Can delete Detalle Venta', 12, 'delete_ventasdet');
+INSERT INTO public.auth_permission VALUES (48, 'Can view Detalle Venta', 12, 'view_ventasdet');
+INSERT INTO public.auth_permission VALUES (49, 'Can add Encabezado Venta', 13, 'add_ventasenc');
+INSERT INTO public.auth_permission VALUES (50, 'Can change Encabezado Venta', 13, 'change_ventasenc');
+INSERT INTO public.auth_permission VALUES (51, 'Can delete Encabezado Venta', 13, 'delete_ventasenc');
+INSERT INTO public.auth_permission VALUES (52, 'Can view Encabezado Venta', 13, 'view_ventasenc');
+INSERT INTO public.auth_permission VALUES (53, 'Can add cliente', 14, 'add_cliente');
+INSERT INTO public.auth_permission VALUES (54, 'Can change cliente', 14, 'change_cliente');
+INSERT INTO public.auth_permission VALUES (55, 'Can delete cliente', 14, 'delete_cliente');
+INSERT INTO public.auth_permission VALUES (56, 'Can view cliente', 14, 'view_cliente');
+INSERT INTO public.auth_permission VALUES (57, 'Can add Detalle Factura', 15, 'add_facturadet');
+INSERT INTO public.auth_permission VALUES (58, 'Can change Detalle Factura', 15, 'change_facturadet');
+INSERT INTO public.auth_permission VALUES (59, 'Can delete Detalle Factura', 15, 'delete_facturadet');
+INSERT INTO public.auth_permission VALUES (60, 'Can view Detalle Factura', 15, 'view_facturadet');
+INSERT INTO public.auth_permission VALUES (61, 'Permisos de Supervisor de Caja Detalle', 15, 'sup_caja_facturadet');
+INSERT INTO public.auth_permission VALUES (62, 'Can add Encabezado Factura', 16, 'add_facturaenc');
+INSERT INTO public.auth_permission VALUES (63, 'Can change Encabezado Factura', 16, 'change_facturaenc');
+INSERT INTO public.auth_permission VALUES (64, 'Can delete Encabezado Factura', 16, 'delete_facturaenc');
+INSERT INTO public.auth_permission VALUES (65, 'Can view Encabezado Factura', 16, 'view_facturaenc');
+INSERT INTO public.auth_permission VALUES (66, 'Permisos de Supervisor de Caja Encabezado', 16, 'sup_caja_facturaenc');
+INSERT INTO public.auth_permission VALUES (67, 'Can add Detalle Factura', 15, 'add_facturadeta');
+INSERT INTO public.auth_permission VALUES (68, 'Can change Detalle Factura', 15, 'change_facturadeta');
+INSERT INTO public.auth_permission VALUES (69, 'Can delete Detalle Factura', 15, 'delete_facturadeta');
+INSERT INTO public.auth_permission VALUES (70, 'Can view Detalle Factura', 15, 'view_facturadeta');
+INSERT INTO public.auth_permission VALUES (71, 'Can add Detalle Factura', 17, 'add_facturadetall');
+INSERT INTO public.auth_permission VALUES (72, 'Can change Detalle Factura', 17, 'change_facturadetall');
+INSERT INTO public.auth_permission VALUES (73, 'Can delete Detalle Factura', 17, 'delete_facturadetall');
+INSERT INTO public.auth_permission VALUES (74, 'Can view Detalle Factura', 17, 'view_facturadetall');
+INSERT INTO public.auth_permission VALUES (75, 'Permisos de Supervisor de Caja Detalle', 17, 'sup_caja_facturadet');
+INSERT INTO public.auth_permission VALUES (76, 'Can add Detalle Factura', 18, 'add_facturadet');
+INSERT INTO public.auth_permission VALUES (77, 'Can change Detalle Factura', 18, 'change_facturadet');
+INSERT INTO public.auth_permission VALUES (78, 'Can delete Detalle Factura', 18, 'delete_facturadet');
+INSERT INTO public.auth_permission VALUES (79, 'Can view Detalle Factura', 18, 'view_facturadet');
+INSERT INTO public.auth_permission VALUES (80, 'Permisos de Supervisor de Caja Detalle', 18, 'sup_caja_facturadet');
+
+
+--
+-- TOC entry 3264 (class 0 OID 16445)
+-- Dependencies: 212
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_user VALUES (6, 'pbkdf2_sha256$150000$2AYlTwQqnuJT$VTmlIsgnxsCMuqwx71mGXBnk05+V1a6fY4ErRh/fbUw=', '2021-06-07 18:39:21.050102-04', false, 'Vicente', '', '', '', false, true, '2021-06-03 22:38:10-04');
+INSERT INTO public.auth_user VALUES (5, 'pbkdf2_sha256$150000$AVC9fkTbr2cA$oYP6ZtUKQH9wsc+7VBIGmrH7L4WyUTAfyPeGfh3oj7g=', '2021-06-07 18:40:21.043665-04', false, 'Gerardo', '', '', '', false, true, '2021-06-03 22:36:30-04');
+INSERT INTO public.auth_user VALUES (1, 'pbkdf2_sha256$150000$HzZFUlMKzdCq$cjXfQpFKiVKZaQc8l4qBoC3GEmQ+5Rp7rAIJP5oAo+o=', '2021-06-07 20:47:46.740068-04', true, 'Administrador', '', '', 'marie.fuentealba@gmail.com', true, true, '2021-04-11 18:38:01-04');
+INSERT INTO public.auth_user VALUES (4, 'pbkdf2_sha256$150000$va9mJ0uHJIBR$i/9uou1w13FI3+CIwmboQJaaQsgQrRDgc54/nOuufBM=', '2021-05-25 21:14:30.078616-04', false, 'Usuario', '', '', '', false, true, '2021-05-14 01:01:49-04');
+INSERT INTO public.auth_user VALUES (3, 'pbkdf2_sha256$150000$60XbyhlV1HtG$kif0i8z2FWF6OlcC3wTdk7uBRLkKKFr2FgNP50W0xPQ=', '2021-05-25 21:15:08.249031-04', false, 'debs', '', '', '', false, true, '2021-05-14 00:54:59-04');
+
+
+--
+-- TOC entry 3266 (class 0 OID 16455)
+-- Dependencies: 214
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_user_groups VALUES (1, 5, 1);
+INSERT INTO public.auth_user_groups VALUES (2, 6, 2);
+
+
+--
+-- TOC entry 3268 (class 0 OID 16463)
+-- Dependencies: 216
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.auth_user_user_permissions VALUES (1, 3, 32);
+INSERT INTO public.auth_user_user_permissions VALUES (2, 3, 25);
+INSERT INTO public.auth_user_user_permissions VALUES (3, 3, 26);
+INSERT INTO public.auth_user_user_permissions VALUES (4, 3, 27);
+INSERT INTO public.auth_user_user_permissions VALUES (5, 3, 28);
+INSERT INTO public.auth_user_user_permissions VALUES (6, 3, 29);
+INSERT INTO public.auth_user_user_permissions VALUES (7, 3, 30);
+INSERT INTO public.auth_user_user_permissions VALUES (8, 3, 31);
+INSERT INTO public.auth_user_user_permissions VALUES (9, 4, 40);
+INSERT INTO public.auth_user_user_permissions VALUES (10, 4, 37);
+INSERT INTO public.auth_user_user_permissions VALUES (11, 4, 38);
+INSERT INTO public.auth_user_user_permissions VALUES (12, 4, 39);
+INSERT INTO public.auth_user_user_permissions VALUES (13, 3, 33);
+INSERT INTO public.auth_user_user_permissions VALUES (14, 3, 34);
+INSERT INTO public.auth_user_user_permissions VALUES (15, 3, 35);
+INSERT INTO public.auth_user_user_permissions VALUES (16, 3, 36);
+INSERT INTO public.auth_user_user_permissions VALUES (17, 3, 41);
+INSERT INTO public.auth_user_user_permissions VALUES (18, 3, 42);
+INSERT INTO public.auth_user_user_permissions VALUES (19, 3, 43);
+INSERT INTO public.auth_user_user_permissions VALUES (20, 3, 44);
+
+
+--
+-- TOC entry 3270 (class 0 OID 16523)
+-- Dependencies: 218
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.django_admin_log VALUES (1, '2021-04-26 23:21:34.786588-04', '1', 'Administrador', 2, '[{"changed": {"fields": ["username"]}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (2, '2021-05-12 02:44:25.190657-04', '2', 'Usuario', 1, '[{"added": {}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (3, '2021-05-12 02:45:08.579691-04', '2', 'Usuario', 2, '[]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (4, '2021-05-14 00:54:59.645398-04', '3', 'debs', 1, '[{"added": {}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (5, '2021-05-14 00:55:05.81714-04', '3', 'debs', 2, '[]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (6, '2021-05-14 00:55:36.939041-04', '3', 'debs', 2, '[{"changed": {"fields": ["user_permissions"]}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (7, '2021-05-14 01:01:17.769349-04', '2', 'Usuario', 3, '', 4, 1);
+INSERT INTO public.django_admin_log VALUES (8, '2021-05-14 01:01:50.101946-04', '4', 'Usuario', 1, '[{"added": {}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (9, '2021-05-14 01:02:06.06039-04', '4', 'Usuario', 2, '[{"changed": {"fields": ["user_permissions"]}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (10, '2021-05-14 01:19:41.554825-04', '3', 'debs', 2, '[{"changed": {"fields": ["user_permissions"]}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (11, '2021-06-03 22:36:30.311131-04', '5', 'Gerardo', 1, '[{"added": {}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (12, '2021-06-03 22:38:10.825608-04', '6', 'Vicente', 1, '[{"added": {}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (13, '2021-06-03 22:42:38.283724-04', '1', 'AreaFacturacion', 1, '[{"added": {}}]', 3, 1);
+INSERT INTO public.django_admin_log VALUES (14, '2021-06-03 22:45:50.743498-04', '2', 'SupervisorCaja', 1, '[{"added": {}}]', 3, 1);
+INSERT INTO public.django_admin_log VALUES (15, '2021-06-03 22:47:05.065061-04', '5', 'Gerardo', 2, '[{"changed": {"fields": ["groups"]}}]', 4, 1);
+INSERT INTO public.django_admin_log VALUES (16, '2021-06-03 22:47:20.607982-04', '6', 'Vicente', 2, '[{"changed": {"fields": ["groups"]}}]', 4, 1);
+
+
+--
+-- TOC entry 3256 (class 0 OID 16409)
+-- Dependencies: 204
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.django_content_type VALUES (1, 'admin', 'logentry');
+INSERT INTO public.django_content_type VALUES (2, 'auth', 'permission');
+INSERT INTO public.django_content_type VALUES (3, 'auth', 'group');
+INSERT INTO public.django_content_type VALUES (4, 'auth', 'user');
+INSERT INTO public.django_content_type VALUES (5, 'contenttypes', 'contenttype');
+INSERT INTO public.django_content_type VALUES (6, 'sessions', 'session');
+INSERT INTO public.django_content_type VALUES (7, 'inv', 'categoria');
+INSERT INTO public.django_content_type VALUES (8, 'inv', 'subcategoria');
+INSERT INTO public.django_content_type VALUES (9, 'inv', 'producto');
+INSERT INTO public.django_content_type VALUES (10, 'inv', 'bitacora');
+INSERT INTO public.django_content_type VALUES (11, 'vnt', 'proveedor');
+INSERT INTO public.django_content_type VALUES (12, 'vnt', 'ventasdet');
+INSERT INTO public.django_content_type VALUES (13, 'vnt', 'ventasenc');
+INSERT INTO public.django_content_type VALUES (14, 'fac', 'cliente');
+INSERT INTO public.django_content_type VALUES (16, 'fac', 'facturaenc');
+INSERT INTO public.django_content_type VALUES (15, 'fac', 'facturadeta');
+INSERT INTO public.django_content_type VALUES (17, 'fac', 'facturadetall');
+INSERT INTO public.django_content_type VALUES (18, 'fac', 'facturadet');
+
+
+--
+-- TOC entry 3254 (class 0 OID 16398)
+-- Dependencies: 202
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.django_migrations VALUES (1, 'contenttypes', '0001_initial', '2021-04-10 16:50:32.741783-04');
+INSERT INTO public.django_migrations VALUES (2, 'auth', '0001_initial', '2021-04-10 16:50:32.796782-04');
+INSERT INTO public.django_migrations VALUES (3, 'admin', '0001_initial', '2021-04-10 16:50:32.866267-04');
+INSERT INTO public.django_migrations VALUES (4, 'admin', '0002_logentry_remove_auto_add', '2021-04-10 16:50:32.886299-04');
+INSERT INTO public.django_migrations VALUES (5, 'admin', '0003_logentry_add_action_flag_choices', '2021-04-10 16:50:32.895337-04');
+INSERT INTO public.django_migrations VALUES (6, 'contenttypes', '0002_remove_content_type_name', '2021-04-10 16:50:32.933221-04');
+INSERT INTO public.django_migrations VALUES (7, 'auth', '0002_alter_permission_name_max_length', '2021-04-10 16:50:32.938188-04');
+INSERT INTO public.django_migrations VALUES (8, 'auth', '0003_alter_user_email_max_length', '2021-04-10 16:50:32.951153-04');
+INSERT INTO public.django_migrations VALUES (9, 'auth', '0004_alter_user_username_opts', '2021-04-10 16:50:32.960549-04');
+INSERT INTO public.django_migrations VALUES (10, 'auth', '0005_alter_user_last_login_null', '2021-04-10 16:50:32.972517-04');
+INSERT INTO public.django_migrations VALUES (11, 'auth', '0006_require_contenttypes_0002', '2021-04-10 16:50:32.975509-04');
+INSERT INTO public.django_migrations VALUES (12, 'auth', '0007_alter_validators_add_error_messages', '2021-04-10 16:50:32.98563-04');
+INSERT INTO public.django_migrations VALUES (13, 'auth', '0008_alter_user_username_max_length', '2021-04-10 16:50:33.017509-04');
+INSERT INTO public.django_migrations VALUES (14, 'auth', '0009_alter_user_last_name_max_length', '2021-04-10 16:50:33.029515-04');
+INSERT INTO public.django_migrations VALUES (15, 'auth', '0010_alter_group_name_max_length', '2021-04-10 16:50:33.043092-04');
+INSERT INTO public.django_migrations VALUES (16, 'auth', '0011_update_proxy_permissions', '2021-04-10 16:50:33.056024-04');
+INSERT INTO public.django_migrations VALUES (17, 'sessions', '0001_initial', '2021-04-10 16:50:33.069988-04');
+INSERT INTO public.django_migrations VALUES (18, 'inv', '0001_initial', '2021-04-12 03:18:19.870416-04');
+INSERT INTO public.django_migrations VALUES (19, 'inv', '0002_subcategoria', '2021-04-18 11:43:56.084856-04');
+INSERT INTO public.django_migrations VALUES (20, 'inv', '0003_producto', '2021-04-23 03:04:08.6434-04');
+INSERT INTO public.django_migrations VALUES (21, 'inv', '0004_bitacora', '2021-04-24 01:39:44.513025-04');
+INSERT INTO public.django_migrations VALUES (22, 'inv', '0005_auto_20210427_0128', '2021-04-27 01:31:24.506748-04');
+INSERT INTO public.django_migrations VALUES (23, 'vnt', '0001_initial', '2021-04-27 01:31:24.556983-04');
+INSERT INTO public.django_migrations VALUES (24, 'vnt', '0002_ventasdet_ventasenc', '2021-05-18 22:40:32.619317-04');
+INSERT INTO public.django_migrations VALUES (25, 'fac', '0001_initial', '2021-05-27 02:42:44.430524-04');
+INSERT INTO public.django_migrations VALUES (26, 'vnt', '0003_auto_20210527_0241', '2021-05-27 02:42:44.479386-04');
+INSERT INTO public.django_migrations VALUES (27, 'fac', '0002_facturadet_facturaenc', '2021-06-01 21:25:04.276341-04');
+INSERT INTO public.django_migrations VALUES (28, 'fac', '0003_facturaenc_impuesto', '2021-06-03 00:46:16.749678-04');
+INSERT INTO public.django_migrations VALUES (29, 'fac', '0003_auto_20210603_0342', '2021-06-03 04:02:26.146557-04');
+INSERT INTO public.django_migrations VALUES (30, 'fac', '0004_facturadetall', '2021-06-03 04:02:26.206699-04');
+INSERT INTO public.django_migrations VALUES (31, 'fac', '0005_facturadet', '2021-06-03 04:02:26.260553-04');
+INSERT INTO public.django_migrations VALUES (32, 'fac', '0006_delete_facturadet', '2021-06-03 04:10:15.096103-04');
+INSERT INTO public.django_migrations VALUES (33, 'fac', '0007_delete_facturadetall', '2021-06-03 04:14:57.150707-04');
+INSERT INTO public.django_migrations VALUES (34, 'fac', '0008_facturadet', '2021-06-03 04:17:54.133509-04');
+INSERT INTO public.django_migrations VALUES (35, 'fac', '0009_delete_facturadeta', '2021-06-03 04:27:22.135056-04');
+
+
+--
+-- TOC entry 3271 (class 0 OID 16554)
+-- Dependencies: 219
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.django_session VALUES ('qayogexogjpsmd1iq120nlnr6twbwsjd', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-04-29 02:17:19.451435-04');
+INSERT INTO public.django_session VALUES ('8lkn3zjov7p26iou5mq5folc4r6j4zf0', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-06-02 03:17:51.903783-04');
+INSERT INTO public.django_session VALUES ('g64sgfuu0pnngmy33gi1ox1nzm5h85av', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-05-01 22:51:06.359648-04');
+INSERT INTO public.django_session VALUES ('mq07gkkdo4ufnwh8o1y64k0qc0i6p9de', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-04-25 20:25:35.144498-04');
+INSERT INTO public.django_session VALUES ('19af3b6pr7cgtn8020eln66gid14i410', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-05-08 01:48:11.996227-04');
+INSERT INTO public.django_session VALUES ('q7so226os8y1rjzxq7n39kbs7p7cv3ut', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-06-12 17:23:13.910959-04');
+INSERT INTO public.django_session VALUES ('jtgq06ggbhtw5spi4qvb6dv1n9eqjcys', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-04-25 22:27:47.865045-04');
+INSERT INTO public.django_session VALUES ('41icpoof2vrqx41015s3v76cmt41riw4', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-06-17 04:28:12.158186-04');
+INSERT INTO public.django_session VALUES ('oqbsjrw5nkns5c3w9z9ix7hakzafvv5p', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-06-18 01:40:01.975498-04');
+INSERT INTO public.django_session VALUES ('rtj2etnx99drz75f3m06z8usnw3vc1db', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-04-25 23:01:46.67129-04');
+INSERT INTO public.django_session VALUES ('i0g3ube38fzj0t05qa7b18vhb7jfe2f7', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-06-21 20:47:46.744056-04');
+INSERT INTO public.django_session VALUES ('l4fagdm71j7atcikwlxqya7x1nr0g9ln', 'YTQzY2EzZjUxMmY3NzEwY2NiMTc3NzA4NmQ4ZjcyNGZkNWM2NjRiNDp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJjOGEwODA3OGUwNGQzZjA0Nzk2OTFjY2JlNDRiNzVjZTNmYmU4MDYyIn0=', '2021-04-29 02:08:42.860038-04');
+
+
+--
+-- TOC entry 3287 (class 0 OID 16723)
+-- Dependencies: 235
+-- Data for Name: fac_cliente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.fac_cliente VALUES (1, true, '2021-05-29 18:21:59.630482-04', '2021-06-01 20:10:16.333537-04', NULL, 'MARIELA', 'ARRATIA', '55452256', 'Natural', 1);
+INSERT INTO public.fac_cliente VALUES (3, true, '2021-06-01 22:59:39.236899-04', '2021-06-01 22:59:39.236899-04', NULL, 'PEDRO', 'PERES', '55452256', 'Jurídica', 1);
+INSERT INTO public.fac_cliente VALUES (2, true, '2021-05-29 18:28:31.691987-04', '2021-06-04 00:58:48.192402-04', 1, 'MARIELA', '111111111111111', NULL, 'Natural', 1);
+INSERT INTO public.fac_cliente VALUES (4, true, '2021-06-04 00:59:45.749396-04', '2021-06-04 00:59:45.749396-04', NULL, 'ERNESTO', 'RELLES', '55452256', 'Natural', 1);
+INSERT INTO public.fac_cliente VALUES (5, true, '2021-06-07 22:12:08.089632-04', '2021-06-07 22:12:08.089632-04', NULL, 'MARIELA', 'ARRATIA', '55452256', 'Natural', 1);
+
+
+--
+-- TOC entry 3291 (class 0 OID 16864)
+-- Dependencies: 239
+-- Data for Name: fac_facturadet; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.fac_facturadet VALUES (1, true, '2021-06-03 04:21:40.754561-04', '2021-06-03 04:21:40.754561-04', 2, 1, 2, 1, 1, 14, 7, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (2, true, '2021-06-03 04:26:10.392842-04', '2021-06-03 04:26:10.392842-04', 2, 1, 2, 0, 2, 15, 7, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (3, true, '2021-06-03 04:32:59.602296-04', '2021-06-03 04:32:59.602296-04', 1, 1, 1, 0, 1, 16, 7, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (4, true, '2021-06-03 04:43:16.242752-04', '2021-06-03 04:43:16.242752-04', 1, 1, 1, 0, 1, 17, 7, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (5, true, '2021-06-03 05:01:13.199183-04', '2021-06-03 05:01:13.199183-04', 25, 430, 10750, 0, 10750, 18, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (6, true, '2021-06-03 05:02:37.69087-04', '2021-06-03 05:02:37.69087-04', 5, 430, 2150, 4, 2146, 19, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (7, true, '2021-06-03 05:05:20.654778-04', '2021-06-03 05:05:20.654778-04', 5, 430, 2150, 2, 2148, 20, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (8, true, '2021-06-03 05:07:06.873012-04', '2021-06-03 05:07:06.873012-04', 4, 10, 40, 6, 34, 21, 10, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (9, true, '2021-06-03 05:11:03.658442-04', '2021-06-03 05:11:03.658442-04', 1, 430, 430, 0, 430, 1, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (10, true, '2021-06-03 22:16:46.85051-04', '2021-06-03 22:16:46.85051-04', 5, 10, 50, 0, 50, 1, 10, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (11, true, '2021-06-04 00:05:30.463998-04', '2021-06-04 00:05:30.463998-04', -4, 10, -40, -6, -34, 21, 10, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (12, true, '2021-06-04 01:00:30.70165-04', '2021-06-04 01:00:30.70165-04', 0, 11, 0, 0, 0, 24, 12, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (13, true, '2021-06-04 01:00:58.433712-04', '2021-06-04 01:00:58.433712-04', 0, 11, 0, 0, 0, 24, 12, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (14, true, '2021-06-04 01:37:45.87381-04', '2021-06-04 01:37:45.87481-04', 0, 25, 0, 0, 0, 28, 9, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (15, true, '2021-06-04 02:01:38.407689-04', '2021-06-04 02:01:38.407689-04', 0, 11, 0, 0, 0, 24, 12, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (16, true, '2021-06-04 02:10:51.803141-04', '2021-06-04 02:10:51.803141-04', 6, 10000, 60000, 0, 60000, 8, 11, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (17, true, '2021-06-04 02:49:22.504432-04', '2021-06-04 02:49:22.504432-04', 4, 11, 44, 0, 44, 8, 12, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (18, true, '2021-06-04 02:58:06.209674-04', '2021-06-04 02:58:06.209674-04', 3, 10, 30, 0, 30, 8, 10, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (19, true, '2021-06-04 02:58:30.661546-04', '2021-06-04 02:58:30.661546-04', 1, 430, 430, 0, 430, 8, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (20, true, '2021-06-04 02:59:11.147073-04', '2021-06-04 02:59:11.147073-04', 3, 430, 1290, 2, 1288, 8, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (21, true, '2021-06-04 03:05:00.405207-04', '2021-06-04 03:05:00.405207-04', 2, 430, 860, 0, 860, 29, 8, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (22, true, '2021-06-04 03:05:37.003628-04', '2021-06-04 03:05:37.003628-04', 2, 10000, 20000, 1, 19999, 30, 11, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (23, true, '2021-06-04 03:35:24.229128-04', '2021-06-04 03:35:24.229128-04', 4, 25, 100, 0, 100, 1, 9, 1, 1);
+INSERT INTO public.fac_facturadet VALUES (24, true, '2021-06-07 18:40:47.362431-04', '2021-06-07 18:40:47.362431-04', -4, 25, -100, 0, -100, 1, 9, 1, 5);
+INSERT INTO public.fac_facturadet VALUES (25, true, '2021-06-07 19:38:33.9261-04', '2021-06-07 19:38:33.9261-04', 4, 11, 44, 0, 44, 31, 12, 5, 5);
+INSERT INTO public.fac_facturadet VALUES (26, true, '2021-06-07 19:54:23.164837-04', '2021-06-07 19:54:23.164837-04', 6, 10, 60, 0, 60, 32, 10, 5, 5);
+INSERT INTO public.fac_facturadet VALUES (27, true, '2021-06-07 20:04:36.836907-04', '2021-06-07 20:04:36.836907-04', 2, 11, 22, 0, 22, 33, 12, 5, 5);
+
+
+--
+-- TOC entry 3289 (class 0 OID 16737)
+-- Dependencies: 237
+-- Data for Name: fac_facturaenc; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.fac_facturaenc VALUES (2, true, '2021-06-03 02:25:08.168867-04', '2021-06-03 02:25:08.168867-04', '2021-06-03 02:25:08.168867-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (3, true, '2021-06-03 02:34:30.632094-04', '2021-06-03 02:34:30.632094-04', '2021-06-03 02:34:30.632094-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (4, true, '2021-06-03 02:42:10.348551-04', '2021-06-03 02:42:10.348551-04', '2021-06-03 02:42:10.348551-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (5, true, '2021-06-03 02:43:04.247401-04', '2021-06-03 02:43:04.247401-04', '2021-06-03 02:43:04.247401-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (6, true, '2021-06-03 02:45:36.055109-04', '2021-06-03 02:45:36.055109-04', '2021-06-03 02:45:36.055109-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (7, true, '2021-06-03 02:53:52.672895-04', '2021-06-03 02:53:52.672895-04', '2021-06-03 02:53:52.672895-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (9, true, '2021-06-03 03:06:25.009091-04', '2021-06-03 03:06:25.023054-04', '2021-06-03 03:06:25.009091-04', 4, 0, 4, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (29, true, '2021-06-04 03:05:00.395768-04', '2021-06-04 03:05:00.410059-04', '2021-06-04 03:05:00.395768-04', 860, 0, 860, 2, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (30, true, '2021-06-04 03:05:36.992659-04', '2021-06-04 03:05:37.009599-04', '2021-06-04 03:05:36.992659-04', 20000, 1, 19999, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (10, true, '2021-06-03 03:07:51.572365-04', '2021-06-03 03:13:21.48308-04', '2021-06-03 03:07:51.572365-04', 50, 0, 50, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (11, true, '2021-06-03 03:34:15.402202-04', '2021-06-03 03:34:15.402202-04', '2021-06-03 03:34:15.402202-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (12, true, '2021-06-03 03:35:43.097801-04', '2021-06-03 03:35:43.097801-04', '2021-06-03 03:35:43.097801-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (13, true, '2021-06-03 04:20:24.863881-04', '2021-06-03 04:20:24.863881-04', '2021-06-03 04:20:24.863881-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (14, true, '2021-06-03 04:21:40.743591-04', '2021-06-03 04:21:40.766565-04', '2021-06-03 04:21:40.743591-04', 2, 1, 1, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (15, true, '2021-06-03 04:26:10.382365-04', '2021-06-03 04:26:10.398717-04', '2021-06-03 04:26:10.382365-04', 2, 0, 2, 1, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (16, true, '2021-06-03 04:32:59.591128-04', '2021-06-03 04:32:59.608205-04', '2021-06-03 04:32:59.592112-04', 1, 0, 1, 2, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (17, true, '2021-06-03 04:43:16.23279-04', '2021-06-03 04:43:21.329605-04', '2021-06-03 04:43:16.23279-04', 1, 0, 1, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (18, true, '2021-06-03 05:01:13.18922-04', '2021-06-03 05:01:13.207161-04', '2021-06-03 05:01:13.18922-04', 10750, 0, 10750, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (19, true, '2021-06-03 05:02:37.684921-04', '2021-06-03 05:02:37.697851-04', '2021-06-03 05:02:37.684921-04', 2150, 4, 2146, 1, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (20, true, '2021-06-03 05:05:20.644806-04', '2021-06-03 05:05:20.660765-04', '2021-06-03 05:05:20.645804-04', 2150, 2, 2148, 2, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (1, true, '2021-06-03 02:16:43.640945-04', '2021-06-07 18:40:47.38458-04', '2021-06-03 02:16:43.641961-04', 480, 0, 480, 3, 1, 5, 0);
+INSERT INTO public.fac_facturaenc VALUES (21, true, '2021-06-03 05:07:06.869109-04', '2021-06-04 00:05:30.482928-04', '2021-06-03 05:07:06.869109-04', 0, 0, 0, 1, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (22, true, '2021-06-04 00:31:14.76463-04', '2021-06-04 00:31:14.76463-04', '2021-06-04 00:31:14.76463-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (23, true, '2021-06-04 00:31:18.79456-04', '2021-06-04 00:31:18.79456-04', '2021-06-04 00:31:18.795558-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (31, true, '2021-06-07 19:38:33.911025-04', '2021-06-07 19:38:33.931787-04', '2021-06-07 19:38:33.911025-04', 44, 0, 44, 3, 5, 5, 0);
+INSERT INTO public.fac_facturaenc VALUES (32, true, '2021-06-07 19:54:23.152883-04', '2021-06-07 19:54:23.169822-04', '2021-06-07 19:54:23.153865-04', 60, 0, 60, 4, 5, 5, 0);
+INSERT INTO public.fac_facturaenc VALUES (25, true, '2021-06-04 01:30:40.72729-04', '2021-06-04 01:30:40.72729-04', '2021-06-04 01:30:40.72729-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (26, true, '2021-06-04 01:33:31.375735-04', '2021-06-04 01:33:31.375735-04', '2021-06-04 01:33:31.375735-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (27, true, '2021-06-04 01:33:36.010533-04', '2021-06-04 01:33:36.010533-04', '2021-06-04 01:33:36.010533-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (28, true, '2021-06-04 01:37:45.862839-04', '2021-06-04 01:37:48.068882-04', '2021-06-04 01:37:45.862839-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (24, true, '2021-06-04 01:00:30.692336-04', '2021-06-04 02:01:38.437815-04', '2021-06-04 01:00:30.692336-04', 0, 0, 0, 3, 1, 1, 0);
+INSERT INTO public.fac_facturaenc VALUES (33, true, '2021-06-07 20:04:36.824016-04', '2021-06-07 20:04:36.84487-04', '2021-06-07 20:04:36.824016-04', 22, 0, 22, 3, 5, 5, 0);
+INSERT INTO public.fac_facturaenc VALUES (34, true, '2021-06-07 20:07:58.375107-04', '2021-06-07 20:07:58.375107-04', '2021-06-07 20:07:58.375107-04', 0, 0, 0, 2, 5, 5, 0);
+INSERT INTO public.fac_facturaenc VALUES (8, true, '2021-06-03 03:02:46.925771-04', '2021-06-04 02:59:11.152059-04', '2021-06-03 03:02:46.926768-04', 61794, 2, 61792, 3, 1, 1, 0);
+
+
+--
+-- TOC entry 3279 (class 0 OID 16631)
+-- Dependencies: 227
+-- Data for Name: inv_bitacora; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inv_bitacora VALUES (2, true, '2021-04-24 02:57:11.691243-04', '2021-04-24 03:00:17.604868-04', 1, '1312312', 0, 0, NULL, NULL, 'Valparaisoe', 0, 0, 0, 0, 0, 0, 0, 'PRUEBA 1', 4, 1);
+INSERT INTO public.inv_bitacora VALUES (4, true, '2021-04-24 03:10:28.157684-04', '2021-04-24 03:10:28.157684-04', NULL, '2131231', 0, 0, '2021-04-24', '2021-04-24', 'Valparaiso', 0, 0, 0, 0, 0, 0, 0, 'QWEWEQWEWW', 4, 1);
+
+
+--
+-- TOC entry 3273 (class 0 OID 16566)
+-- Dependencies: 221
+-- Data for Name: inv_categoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inv_categoria VALUES (15, true, '2021-04-24 00:57:11.981042-04', '2021-04-24 00:57:18.622797-04', 1, 'COMBUSTIBLES', 1);
+INSERT INTO public.inv_categoria VALUES (19, true, '2021-04-26 17:10:10.095888-04', '2021-04-26 17:10:10.095888-04', NULL, 'PRUEBA', 1);
+INSERT INTO public.inv_categoria VALUES (16, true, '2021-04-24 03:09:45.990619-04', '2021-04-26 17:10:17.987206-04', 1, 'INSUMOS', 1);
+INSERT INTO public.inv_categoria VALUES (20, true, '2021-06-04 00:55:41.36943-04', '2021-06-04 00:56:16.375302-04', 1, 'CAT PRUEBA', 1);
+
+
+--
+-- TOC entry 3277 (class 0 OID 16606)
+-- Dependencies: 225
+-- Data for Name: inv_producto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inv_producto VALUES (12, true, '2021-06-04 00:57:28.490685-04', '2021-06-07 20:04:36.848858-04', NULL, '666666', '5543535', 'PRODUCTO PRUEBA ULTIMO', 11, 2, NULL, 20, 'adsdadadas', 12, 1);
+INSERT INTO public.inv_producto VALUES (7, true, '2021-04-26 17:10:58.39495-04', '2021-06-07 22:30:44.964452-04', 1, '2131', '32131', 'PETRÓLEO 1.1', 1, 0, NULL, 1, '321321', 11, 1);
+INSERT INTO public.inv_producto VALUES (10, true, '2021-06-02 21:04:09.202681-04', '2021-06-07 22:33:48.279351-04', 1, '12332131', '32131', 'PETRÓLEO 1.1', 10, 28, NULL, 0, 'dedew', 11, 1);
+INSERT INTO public.inv_producto VALUES (14, true, '2021-06-07 22:34:03.870958-04', '2021-06-07 22:34:03.870958-04', NULL, '123', '32131', 'PETRÓLEO', 12, 12, NULL, 8, 'dedew', 5, 1);
+INSERT INTO public.inv_producto VALUES (8, true, '2021-05-21 16:10:01.286612-04', '2021-06-04 03:05:00.412056-04', 1, '15665156', '4942653', 'KEROSENE', 430, 8, NULL, 36, 'ddsa', 10, 1);
+INSERT INTO public.inv_producto VALUES (11, true, '2021-06-04 00:37:18.348811-04', '2021-06-04 03:05:37.011596-04', NULL, '999', '88888', 'PRUEBA PRODUCTO', 10000, 4, NULL, 12, 'dedew', 4, 1);
+INSERT INTO public.inv_producto VALUES (9, true, '2021-06-02 20:45:56.890832-04', '2021-06-07 18:40:47.389568-04', 1, '9380000', '32131', 'GASOLINA', 25, 85, NULL, 19, '31313', 4, 1);
+
+
+--
+-- TOC entry 3275 (class 0 OID 16583)
+-- Dependencies: 223
+-- Data for Name: inv_subcategoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.inv_subcategoria VALUES (5, true, '2021-04-24 00:58:34.938666-04', '2021-04-24 00:58:34.938666-04', NULL, 'GASOLINA 95', 15, 1);
+INSERT INTO public.inv_subcategoria VALUES (6, true, '2021-04-24 01:00:02.030241-04', '2021-04-24 01:00:02.030241-04', NULL, 'GASOLINA 98', 15, 1);
+INSERT INTO public.inv_subcategoria VALUES (4, true, '2021-04-24 00:58:19.875888-04', '2021-04-26 16:55:31.524727-04', 1, 'GASOLINA 93', 15, 1);
+INSERT INTO public.inv_subcategoria VALUES (10, true, '2021-04-26 17:08:59.334245-04', '2021-04-26 17:08:59.334245-04', NULL, 'DISEL', 15, 1);
+INSERT INTO public.inv_subcategoria VALUES (11, true, '2021-04-26 17:10:28.759204-04', '2021-04-26 17:10:28.759204-04', NULL, 'PETRÓLEO', 16, 1);
+INSERT INTO public.inv_subcategoria VALUES (12, true, '2021-06-04 00:56:37.808052-04', '2021-06-04 00:56:37.808052-04', NULL, 'SUB CAT PRUEBA', 20, 1);
+
+
+--
+-- TOC entry 3281 (class 0 OID 16654)
+-- Dependencies: 229
+-- Data for Name: vnt_proveedor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.vnt_proveedor VALUES (3, false, '2021-04-27 01:54:02.017489-04', '2021-04-27 03:36:27.92759-04', NULL, 'PRUEBA', 'Club de Golf Santa Sara, Parcela G53, Batuco, Lampa', 'wq', '948596576', 'marie.fuentealba@gmail.com', 1);
+INSERT INTO public.vnt_proveedor VALUES (2, false, '2021-04-27 01:45:56.12246-04', '2021-05-12 00:56:28.420797-04', NULL, 'PM', 'Club de Golf Santa Sara, Parcela G53, Batuco, Lampa', '4234234', '948596576', 'marie.fuentealba@gmail.com', 1);
+INSERT INTO public.vnt_proveedor VALUES (4, true, '2021-06-04 00:58:21.738096-04', '2021-06-04 00:59:22.18607-04', 1, 'PROVEEDOR PRUEBA ULTIMIO', 'Club de Golf Santa Sara, Parcela G53, Batuco, Lampa', 'sdadasasd', '948596576', 'marie.fuentealba@gmail.com', 1);
+INSERT INTO public.vnt_proveedor VALUES (6, true, '2021-06-07 21:36:08.825799-04', '2021-06-07 21:36:08.825799-04', NULL, 'PETRÓLEO', 'Club de Golf Santa Sara, Parcela G53, Batuco, Lampa', 'drwerew', '948596576', 'marie.fuentealba@gmail.com', 1);
+INSERT INTO public.vnt_proveedor VALUES (1, false, '2021-04-27 01:43:43.862443-04', '2021-06-07 22:15:01.70164-04', 1, 'QMW', 'Club de Golf Santa Sara, Parcela G53, Batuco, Lampa', 'drwerew', '948596576', 'marie.fuentealba@gmail.com', 1);
+INSERT INTO public.vnt_proveedor VALUES (7, true, '2021-06-07 23:54:30.037597-04', '2021-06-07 23:54:30.037597-04', NULL, 'PETRÓLEO212', 'Club de Golf Santa Sara, Parcela G53, Batuco, Lampa', 'drwerew', '6948596576', 'marie.fuentealba@gmail.com', 1);
+
+
+--
+-- TOC entry 3285 (class 0 OID 16685)
+-- Dependencies: 233
+-- Data for Name: vnt_ventasdet; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.vnt_ventasdet VALUES (1, true, '2021-05-21 19:39:28.582418-04', '2021-05-21 19:39:28.582418-04', NULL, 4, 3, 12, 0, 12, 0, 8, 1, 5);
+INSERT INTO public.vnt_ventasdet VALUES (2, true, '2021-05-21 19:48:59.279508-04', '2021-05-21 19:48:59.279508-04', NULL, 3, 5, 15, 0, 15, 0, 8, 1, 7);
+INSERT INTO public.vnt_ventasdet VALUES (3, true, '2021-05-21 20:07:19.184234-04', '2021-05-21 20:07:19.184234-04', NULL, 2, 3, 6, 0, 6, 0, 8, 1, 8);
+INSERT INTO public.vnt_ventasdet VALUES (4, true, '2021-05-21 20:09:03.558854-04', '2021-05-21 20:09:03.558854-04', NULL, 3, 3, 9, 0, 9, 0, 7, 1, 9);
+INSERT INTO public.vnt_ventasdet VALUES (5, true, '2021-05-21 20:14:02.272214-04', '2021-05-21 20:14:02.272214-04', NULL, 4, 3, 12, 0, 12, 0, 8, 1, 10);
+INSERT INTO public.vnt_ventasdet VALUES (6, true, '2021-05-21 20:16:31.776113-04', '2021-05-21 20:16:31.776113-04', NULL, 2, 2, 4, 0, 4, 0, 7, 1, 11);
+INSERT INTO public.vnt_ventasdet VALUES (7, true, '2021-05-23 02:59:15.925805-04', '2021-05-23 02:59:15.925805-04', NULL, 4, 4, 16, 0, 16, 0, 7, 1, 17);
+INSERT INTO public.vnt_ventasdet VALUES (8, true, '2021-05-23 03:04:34.201168-04', '2021-05-23 03:04:34.201168-04', NULL, 3, 3, 9, 0, 9, 0, 7, 1, 19);
+INSERT INTO public.vnt_ventasdet VALUES (9, true, '2021-05-23 03:17:46.998944-04', '2021-05-23 03:17:46.998944-04', NULL, 4, 3, 12, 0, 12, 0, 7, 1, 20);
+INSERT INTO public.vnt_ventasdet VALUES (10, true, '2021-05-23 03:18:33.924113-04', '2021-05-23 03:18:33.924113-04', NULL, 5, 2, 10, 0, 10, 0, 8, 1, 21);
+INSERT INTO public.vnt_ventasdet VALUES (11, true, '2021-05-25 17:51:05.429467-04', '2021-05-25 17:51:05.429467-04', NULL, 3, 2, 6, 2, 4, 0, 7, 1, 22);
+INSERT INTO public.vnt_ventasdet VALUES (12, true, '2021-05-25 17:55:46.654084-04', '2021-05-25 17:55:46.654084-04', NULL, 4, 1200, 4800, 0, 4800, 0, 8, 1, 23);
+INSERT INTO public.vnt_ventasdet VALUES (13, true, '2021-05-25 18:11:42.575613-04', '2021-05-25 18:11:42.575613-04', NULL, 1, 1, 1, 0, 1, 0, 8, 1, 29);
+INSERT INTO public.vnt_ventasdet VALUES (14, true, '2021-05-25 18:33:44.403308-04', '2021-05-25 18:33:44.403308-04', NULL, 0, 0, 0, 0, 0, 0, 7, 1, 34);
+INSERT INTO public.vnt_ventasdet VALUES (15, true, '2021-05-25 18:35:31.025763-04', '2021-05-25 18:35:31.025763-04', NULL, 3, 3, 9, 0, 9, 0, 7, 1, 35);
+INSERT INTO public.vnt_ventasdet VALUES (16, true, '2021-05-25 18:37:14.834218-04', '2021-05-25 18:37:14.834218-04', NULL, 3, 3, 9, 0, 9, 0, 7, 1, 36);
+INSERT INTO public.vnt_ventasdet VALUES (17, true, '2021-05-25 18:41:56.07207-04', '2021-05-25 18:41:56.07207-04', NULL, 10, 11, 110, 0, 110, 0, 7, 1, 37);
+INSERT INTO public.vnt_ventasdet VALUES (18, true, '2021-05-25 18:43:46.009662-04', '2021-05-25 18:43:46.009662-04', NULL, 11, 18, 198, 0, 198, 0, 7, 1, 38);
+INSERT INTO public.vnt_ventasdet VALUES (19, true, '2021-05-25 18:44:15.482089-04', '2021-05-25 18:44:15.482089-04', NULL, 14, 16, 224, 0, 224, 0, 7, 1, 39);
+INSERT INTO public.vnt_ventasdet VALUES (20, true, '2021-05-25 18:47:34.387426-04', '2021-05-25 18:47:34.387426-04', NULL, 11, 13, 143, 0, 143, 0, 8, 1, 40);
+INSERT INTO public.vnt_ventasdet VALUES (21, true, '2021-05-25 18:51:45.274289-04', '2021-05-25 18:51:45.274289-04', NULL, 9, 15, 135, 0, 135, 0, 7, 1, 41);
+INSERT INTO public.vnt_ventasdet VALUES (22, true, '2021-05-25 18:59:02.999834-04', '2021-05-25 18:59:02.999834-04', NULL, 10, 11, 110, 0, 110, 0, 7, 1, 42);
+INSERT INTO public.vnt_ventasdet VALUES (23, true, '2021-05-25 19:20:00.822572-04', '2021-05-25 19:20:00.822572-04', NULL, 11, 15, 165, 0, 165, 0, 7, 1, 45);
+INSERT INTO public.vnt_ventasdet VALUES (24, true, '2021-05-25 19:20:39.173385-04', '2021-05-25 19:20:39.173385-04', NULL, 13, 15, 195, 0, 195, 0, 8, 1, 45);
+INSERT INTO public.vnt_ventasdet VALUES (25, true, '2021-05-25 19:28:02.672397-04', '2021-05-25 19:28:02.672397-04', NULL, 15, 16, 240, 0, 240, 0, 7, 1, 46);
+INSERT INTO public.vnt_ventasdet VALUES (26, true, '2021-05-25 19:28:39.209911-04', '2021-05-25 19:28:39.209911-04', NULL, 13, 17, 221, 0, 221, 0, 7, 1, 46);
+INSERT INTO public.vnt_ventasdet VALUES (27, true, '2021-05-25 19:29:21.004481-04', '2021-05-25 19:29:21.004481-04', NULL, 10, 14, 140, 0, 140, 0, 7, 1, 46);
+INSERT INTO public.vnt_ventasdet VALUES (28, true, '2021-05-25 19:39:31.658759-04', '2021-05-25 19:39:31.658759-04', NULL, 10, 9, 90, 0, 90, 0, 7, 1, 47);
+INSERT INTO public.vnt_ventasdet VALUES (29, true, '2021-05-25 19:39:54.537665-04', '2021-05-25 19:39:54.537665-04', NULL, 8, 7, 56, 0, 56, 0, 8, 1, 47);
+INSERT INTO public.vnt_ventasdet VALUES (30, true, '2021-05-25 19:41:01.697058-04', '2021-05-25 19:41:01.697058-04', NULL, 13, 21, 273, 0, 273, 0, 7, 1, 47);
+INSERT INTO public.vnt_ventasdet VALUES (31, true, '2021-05-25 19:48:00.068216-04', '2021-05-25 19:48:00.068216-04', NULL, 11, 10, 110, 0, 110, 0, 7, 1, 47);
+INSERT INTO public.vnt_ventasdet VALUES (32, true, '2021-05-25 19:52:04.499725-04', '2021-05-25 19:52:04.499725-04', NULL, 15, 12, 180, 0, 180, 0, 7, 1, 48);
+INSERT INTO public.vnt_ventasdet VALUES (33, true, '2021-05-25 19:59:53.427401-04', '2021-05-25 19:59:53.427401-04', NULL, 10, 11, 110, 0, 110, 0, 7, 1, 1);
+INSERT INTO public.vnt_ventasdet VALUES (34, true, '2021-05-25 20:01:52.081012-04', '2021-05-25 20:01:52.081012-04', NULL, 8, 11, 88, 0, 88, 0, 7, 1, 47);
+INSERT INTO public.vnt_ventasdet VALUES (35, true, '2021-05-25 20:07:08.65399-04', '2021-05-25 20:07:08.65399-04', NULL, 8, 12, 96, 0, 96, 0, 7, 1, 49);
+INSERT INTO public.vnt_ventasdet VALUES (36, true, '2021-05-25 20:07:34.820702-04', '2021-05-25 20:07:34.820702-04', NULL, 6, 10, 60, 0, 60, 0, 7, 1, 49);
+INSERT INTO public.vnt_ventasdet VALUES (37, true, '2021-05-25 20:09:29.032389-04', '2021-05-25 20:09:29.032389-04', NULL, 8, 10, 80, 0, 80, 0, 7, 1, 49);
+INSERT INTO public.vnt_ventasdet VALUES (38, true, '2021-05-25 20:31:34.81312-04', '2021-05-25 20:31:34.81312-04', NULL, 12, 20, 240, 0, 240, 0, 7, 1, 50);
+INSERT INTO public.vnt_ventasdet VALUES (39, true, '2021-05-25 20:33:58.328739-04', '2021-05-25 20:33:58.328739-04', NULL, 10, 11, 110, 0, 110, 0, 7, 1, 50);
+INSERT INTO public.vnt_ventasdet VALUES (40, true, '2021-05-25 20:36:12.139824-04', '2021-05-25 20:36:12.139824-04', NULL, 15, 15, 225, 0, 225, 0, 7, 1, 50);
+INSERT INTO public.vnt_ventasdet VALUES (41, true, '2021-05-25 21:19:19.916078-04', '2021-05-25 21:19:19.916078-04', NULL, 2000, 100, 200000, 120, 199880, 0, 8, 1, 51);
+INSERT INTO public.vnt_ventasdet VALUES (42, true, '2021-05-27 01:05:37.84629-04', '2021-05-27 01:05:37.84629-04', NULL, 9, 14, 126, 0, 126, 0, 7, 1, 52);
+
+
+--
+-- TOC entry 3283 (class 0 OID 16674)
+-- Dependencies: 231
+-- Data for Name: vnt_ventasenc; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.vnt_ventasenc VALUES (2, true, '2021-05-21 19:30:04.996333-04', '2021-05-21 19:30:04.996333-04', NULL, '2021-05-04', '312SAS', '2123321', '2021-05-26', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (3, true, '2021-05-21 19:31:13.748329-04', '2021-05-21 19:31:13.748329-04', NULL, '2021-05-04', '312SAS', '2123321', '2021-06-21', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (4, true, '2021-05-21 19:33:30.97923-04', '2021-05-21 19:33:30.97923-04', NULL, '2021-05-04', 'SADSA', '2123321', '2021-05-27', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (5, true, '2021-05-21 19:39:28.571935-04', '2021-05-21 19:39:28.571935-04', NULL, '2021-04-29', 'CXCZ', '2123321', '2021-05-13', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (7, true, '2021-05-21 19:48:59.273547-04', '2021-05-21 19:48:59.286277-04', NULL, '2021-04-29', 'DSFA', '3123213', '2021-05-05', 15, 0, 15, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (8, true, '2021-05-21 20:07:19.175258-04', '2021-05-21 20:07:19.191243-04', NULL, '2021-05-12', 'DASDA', '2123321', '2021-05-06', 6, 0, 6, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (9, true, '2021-05-21 20:09:03.554912-04', '2021-05-21 20:09:03.564468-04', NULL, '2021-05-04', 'DSAD', '2123321', '2021-05-05', 9, 0, 9, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (10, true, '2021-05-21 20:14:02.260545-04', '2021-05-21 20:14:02.276502-04', NULL, '2021-04-20', 'SADSADAD', '2123321', '2021-05-12', 12, 0, 12, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (11, true, '2021-05-21 20:16:31.766172-04', '2021-05-21 20:16:31.7801-04', NULL, '2021-05-13', 'DASDAS', '2123321', '2021-05-19', 4, 0, 4, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (12, true, '2021-05-23 02:32:57.444037-04', '2021-05-23 02:32:57.444037-04', NULL, '2021-05-06', 'DASDAS', '2123321', '2021-05-20', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (13, true, '2021-05-23 02:37:42.114364-04', '2021-05-23 02:37:42.114364-04', NULL, '2021-05-05', 'SDASS', '2123321', '2021-05-13', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (14, true, '2021-05-23 02:42:33.411939-04', '2021-05-23 02:42:33.411939-04', NULL, '2021-05-13', 'REEE', '2123321', '2021-09-23', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (15, true, '2021-05-23 02:52:56.893321-04', '2021-05-23 02:52:56.893321-04', NULL, '2021-03-09', '', '2123321', '2021-05-28', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (16, true, '2021-05-23 02:55:55.452422-04', '2021-05-23 02:55:55.452422-04', NULL, '2021-05-03', '11111', '2123321', '2021-05-04', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (17, true, '2021-05-23 02:59:15.914451-04', '2021-05-23 02:59:15.931508-04', NULL, '2021-04-28', '222', '2123321', '2021-05-04', 16, 0, 16, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (18, true, '2021-05-23 03:01:55.477045-04', '2021-05-23 03:01:55.477045-04', NULL, '2021-05-05', '', '2123321', '2021-05-04', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (19, true, '2021-05-23 03:04:34.190249-04', '2021-05-23 03:04:34.208251-04', NULL, '2021-04-28', '3333', '2123321', '2021-04-26', 9, 0, 9, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (20, true, '2021-05-23 03:17:46.989852-04', '2021-05-23 03:17:47.007258-04', NULL, '2021-05-04', '44444', '2123321', '2021-05-29', 12, 0, 12, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (21, true, '2021-05-23 03:18:33.914066-04', '2021-05-23 03:18:33.928414-04', NULL, '2021-05-04', '55555', '3123213', '2021-05-14', 10, 0, 10, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (6, true, '2021-05-21 19:41:56.353513-04', '2021-05-23 03:20:06.223778-04', 1, '2021-04-23', 'CCZ', '2123321', '2021-05-12', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (22, true, '2021-05-25 17:51:05.414506-04', '2021-05-25 17:51:05.436063-04', NULL, '2021-06-25', 'EWQEWQ', '2123321', '2021-05-29', 6, 2, 4, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (23, true, '2021-05-25 17:55:46.638962-04', '2021-05-25 17:55:46.658813-04', NULL, '2021-05-08', 'FSFSD', '3123213', '2021-05-20', 4800, 0, 4800, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (24, true, '2021-05-25 17:57:13.506857-04', '2021-05-25 17:57:13.506857-04', NULL, '2021-04-29', '', '3123213', '2021-05-04', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (25, true, '2021-05-25 18:04:51.004597-04', '2021-05-25 18:04:51.004597-04', NULL, '2021-05-06', '', '2123321', '2021-04-29', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (26, true, '2021-05-25 18:09:07.475788-04', '2021-05-25 18:09:07.475788-04', NULL, '2021-04-30', 'DDAS', '2123321', '2021-05-05', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (27, true, '2021-05-25 18:10:32.217488-04', '2021-05-25 18:10:32.217488-04', NULL, '2021-04-30', 'DDAS', '2123321', '2021-05-05', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (28, true, '2021-05-25 18:10:51.084636-04', '2021-05-25 18:10:51.084636-04', NULL, '2021-05-05', 'EWRREWR', '3123213', '2021-05-13', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (29, true, '2021-05-25 18:11:42.563469-04', '2021-05-25 18:12:03.409039-04', 1, '2021-04-28', 'EWRREWR444445555', '3123213', '2021-04-25', 1, 0, 1, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (30, true, '2021-05-25 18:23:56.108317-04', '2021-05-25 18:23:56.108317-04', NULL, '2021-04-27', 'PRUEBA', '2123321', '2021-05-14', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (31, true, '2021-05-25 18:26:00.545698-04', '2021-05-25 18:26:00.545698-04', NULL, '2021-05-03', '', '2123321', '2021-05-10', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (32, true, '2021-05-25 18:28:51.592113-04', '2021-05-25 18:28:51.592113-04', NULL, '2021-05-13', '', '3123213', '2021-05-03', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (33, true, '2021-05-25 18:31:16.42538-04', '2021-05-25 18:31:16.42538-04', NULL, '2021-04-28', 'SADDAS', '2123321', '2021-06-12', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (34, true, '2021-05-25 18:33:44.388193-04', '2021-05-25 18:33:44.410304-04', NULL, '2021-05-20', '', '2123321', '2021-06-03', 0, 0, 0, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (35, true, '2021-05-25 18:35:31.014963-04', '2021-05-25 18:35:31.03141-04', NULL, '2021-05-04', 'PRUEBA 1111', '2123321', '2021-04-27', 9, 0, 9, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (36, true, '2021-05-25 18:37:14.819356-04', '2021-05-25 18:37:14.839612-04', NULL, '2021-04-29', '211', '2123321', '2021-05-04', 9, 0, 9, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (37, true, '2021-05-25 18:41:56.060901-04', '2021-05-25 18:41:56.079116-04', NULL, '2021-02-19', 'WWWWWWWWWWWWWWW', '2123321', '2021-07-09', 110, 0, 110, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (38, true, '2021-05-25 18:43:46.000766-04', '2021-05-25 18:43:46.016604-04', NULL, '2021-04-29', 'ASA', '2123321', '2021-05-06', 198, 0, 198, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (40, true, '2021-05-25 18:47:34.376575-04', '2021-05-25 18:49:46.928573-04', 1, '2021-05-13', 'PRUEBA FECHA', '2123321', '2021-05-25', 143, 0, 143, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (39, true, '2021-05-25 18:44:15.476963-04', '2021-05-25 18:46:28.89855-04', 1, '2021-04-05', 'ASA22222222222222222222222', '2123321', '2021-05-20', 224, 0, 224, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (41, true, '2021-05-25 18:51:45.263561-04', '2021-05-25 18:51:45.280494-04', NULL, '2021-05-02', '333333333333333333333333', '2123321', '2021-05-20', 135, 0, 135, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (51, true, '2021-05-25 21:19:19.903096-04', '2021-05-25 21:19:19.921047-04', NULL, '2021-05-15', 'HGYUGUG', '2123321', '2021-05-15', 200000, 120, 199880, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (42, true, '2021-05-25 18:59:02.988522-04', '2021-05-25 18:59:30.820896-04', 1, '2021-05-14', 'SAAASA1222222222222222222222222222', '2123321', '2021-05-21', 110, 0, 110, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (44, true, '2021-05-25 19:19:39.841004-04', '2021-05-25 19:19:39.841004-04', NULL, '2021-05-06', 'KLÑL', '2123321', '2021-05-03', 0, 0, 0, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (52, true, '2021-05-27 01:05:37.832286-04', '2021-05-27 01:05:37.851259-04', NULL, '2021-05-01', 'DDASDSAD', '3123213', '2021-05-08', 126, 0, 126, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (45, true, '2021-05-25 19:20:00.810063-04', '2021-05-25 19:20:55.847239-04', 1, '2021-05-17', 'KLÑL', '2123321', '2021-05-08', 360, 0, 360, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (49, true, '2021-05-25 20:07:08.644028-04', '2021-05-25 20:14:18.531605-04', 1, '2021-05-15', '111111111111111111111111111', '2123321', '2021-05-22', 236, 0, 236, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (46, true, '2021-05-25 19:28:02.666247-04', '2021-05-25 19:29:21.008632-04', 1, '2021-05-06', 'FSFSD ZZZZZZZZZZZZZZZZZZZZZZ ZZZZZZZZZZZZZZZZZZZZZ', '2123321', '2021-05-26', 601, 0, 601, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (48, true, '2021-05-25 19:52:04.488786-04', '2021-05-25 19:52:04.506705-04', NULL, '2021-05-08', '44444444444444', '2123321', '2021-05-15', 180, 0, 180, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (1, true, '2021-05-21 19:27:10.59245-04', '2021-05-25 19:59:53.432387-04', 1, '2021-05-21', 'DASDASDS XXXXXXXXXXXXXXX', '3123213', '2021-05-15', 110, 0, 110, 3, 1);
+INSERT INTO public.vnt_ventasenc VALUES (47, true, '2021-05-25 19:39:31.647093-04', '2021-05-25 20:01:52.085872-04', 1, '2021-05-07', '33333333333333', '2123321', '2021-05-14', 617, 0, 617, 2, 1);
+INSERT INTO public.vnt_ventasenc VALUES (50, true, '2021-05-25 20:31:34.802172-04', '2021-05-25 20:36:12.143461-04', 1, '2021-05-15', 'KOJOIJOINON', '3123213', '2021-05-27', 575, 0, 575, 3, 1);
+
+
+--
+-- TOC entry 3317 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 2, true);
+
+
+--
+-- TOC entry 3318 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 18, true);
+
+
+--
+-- TOC entry 3319 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 80, true);
+
+
+--
+-- TOC entry 3320 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 2, true);
+
+
+--
+-- TOC entry 3321 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 6, true);
+
+
+--
+-- TOC entry 3322 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 20, true);
+
+
+--
+-- TOC entry 3323 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 16, true);
+
+
+--
+-- TOC entry 3324 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 18, true);
+
+
+--
+-- TOC entry 3325 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 35, true);
+
+
+--
+-- TOC entry 3326 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: fac_cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.fac_cliente_id_seq', 5, true);
+
+
+--
+-- TOC entry 3327 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: fac_facturadet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.fac_facturadet_id_seq', 27, true);
+
+
+--
+-- TOC entry 3328 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: fac_facturaenc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.fac_facturaenc_id_seq', 34, true);
+
+
+--
+-- TOC entry 3329 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: inv_bitacora_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inv_bitacora_id_seq', 6, true);
+
+
+--
+-- TOC entry 3330 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: inv_categoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inv_categoria_id_seq', 20, true);
+
+
+--
+-- TOC entry 3331 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: inv_producto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inv_producto_id_seq', 14, true);
+
+
+--
+-- TOC entry 3332 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: inv_subcategoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.inv_subcategoria_id_seq', 12, true);
+
+
+--
+-- TOC entry 3333 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: vnt_proveedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vnt_proveedor_id_seq', 7, true);
+
+
+--
+-- TOC entry 3334 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: vnt_ventasdet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vnt_ventasdet_id_seq', 42, true);
+
+
+--
+-- TOC entry 3335 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: vnt_ventasenc_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.vnt_ventasenc_id_seq', 52, true);
+
+
+--
+-- TOC entry 3002 (class 2606 OID 16552)
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 3007 (class 2606 OID 16489)
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- TOC entry 3010 (class 2606 OID 16442)
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3004 (class 2606 OID 16432)
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2997 (class 2606 OID 16475)
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- TOC entry 2999 (class 2606 OID 16424)
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3018 (class 2606 OID 16460)
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3021 (class 2606 OID 16504)
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- TOC entry 3012 (class 2606 OID 16450)
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3024 (class 2606 OID 16468)
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3027 (class 2606 OID 16518)
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- TOC entry 3015 (class 2606 OID 16546)
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- TOC entry 3030 (class 2606 OID 16532)
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2992 (class 2606 OID 16416)
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- TOC entry 2994 (class 2606 OID 16414)
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2990 (class 2606 OID 16406)
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3034 (class 2606 OID 16561)
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- TOC entry 3080 (class 2606 OID 16728)
+-- Name: fac_cliente fac_cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_cliente
+    ADD CONSTRAINT fac_cliente_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3089 (class 2606 OID 16869)
+-- Name: fac_facturadet fac_facturadet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturadet
+    ADD CONSTRAINT fac_facturadet_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3084 (class 2606 OID 16742)
+-- Name: fac_facturaenc fac_facturaenc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturaenc
+    ADD CONSTRAINT fac_facturaenc_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3059 (class 2606 OID 16638)
+-- Name: inv_bitacora inv_bitacora_codigo_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_bitacora
+    ADD CONSTRAINT inv_bitacora_codigo_key UNIQUE (codigo);
+
+
+--
+-- TOC entry 3061 (class 2606 OID 16636)
+-- Name: inv_bitacora inv_bitacora_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_bitacora
+    ADD CONSTRAINT inv_bitacora_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3038 (class 2606 OID 16573)
+-- Name: inv_categoria inv_categoria_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_categoria
+    ADD CONSTRAINT inv_categoria_descripcion_key UNIQUE (descripcion);
+
+
+--
+-- TOC entry 3040 (class 2606 OID 16571)
+-- Name: inv_categoria inv_categoria_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_categoria
+    ADD CONSTRAINT inv_categoria_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3050 (class 2606 OID 16625)
+-- Name: inv_producto inv_producto_codigo_codigo_barra_42a7a838_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_producto
+    ADD CONSTRAINT inv_producto_codigo_codigo_barra_42a7a838_uniq UNIQUE (codigo, codigo_barra);
+
+
+--
+-- TOC entry 3052 (class 2606 OID 16613)
+-- Name: inv_producto inv_producto_codigo_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_producto
+    ADD CONSTRAINT inv_producto_codigo_key UNIQUE (codigo);
+
+
+--
+-- TOC entry 3054 (class 2606 OID 16611)
+-- Name: inv_producto inv_producto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_producto
+    ADD CONSTRAINT inv_producto_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3043 (class 2606 OID 16600)
+-- Name: inv_subcategoria inv_subcategoria_categoria_id_descripcion_006ab899_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_subcategoria
+    ADD CONSTRAINT inv_subcategoria_categoria_id_descripcion_006ab899_uniq UNIQUE (categoria_id, descripcion);
+
+
+--
+-- TOC entry 3046 (class 2606 OID 16588)
+-- Name: inv_subcategoria inv_subcategoria_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_subcategoria
+    ADD CONSTRAINT inv_subcategoria_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3066 (class 2606 OID 16664)
+-- Name: vnt_proveedor vnt_proveedor_descripcion_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_proveedor
+    ADD CONSTRAINT vnt_proveedor_descripcion_key UNIQUE (descripcion);
+
+
+--
+-- TOC entry 3068 (class 2606 OID 16662)
+-- Name: vnt_proveedor vnt_proveedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_proveedor
+    ADD CONSTRAINT vnt_proveedor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3075 (class 2606 OID 16690)
+-- Name: vnt_ventasdet vnt_ventasdet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasdet
+    ADD CONSTRAINT vnt_ventasdet_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3071 (class 2606 OID 16682)
+-- Name: vnt_ventasenc vnt_ventasenc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasenc
+    ADD CONSTRAINT vnt_ventasenc_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3000 (class 1259 OID 16553)
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- TOC entry 3005 (class 1259 OID 16490)
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- TOC entry 3008 (class 1259 OID 16491)
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 2995 (class 1259 OID 16476)
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- TOC entry 3016 (class 1259 OID 16506)
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- TOC entry 3019 (class 1259 OID 16505)
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- TOC entry 3022 (class 1259 OID 16520)
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- TOC entry 3025 (class 1259 OID 16519)
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- TOC entry 3013 (class 1259 OID 16547)
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- TOC entry 3028 (class 1259 OID 16543)
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- TOC entry 3031 (class 1259 OID 16544)
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- TOC entry 3032 (class 1259 OID 16563)
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- TOC entry 3035 (class 1259 OID 16562)
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- TOC entry 3081 (class 1259 OID 16734)
+-- Name: fac_cliente_uc_id_e29d1d93; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_cliente_uc_id_e29d1d93 ON public.fac_cliente USING btree (uc_id);
+
+
+--
+-- TOC entry 3087 (class 1259 OID 16890)
+-- Name: fac_facturadet_factura_id_88bb956f; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturadet_factura_id_88bb956f ON public.fac_facturadet USING btree (factura_id);
+
+
+--
+-- TOC entry 3090 (class 1259 OID 16891)
+-- Name: fac_facturadet_producto_id_a075afcf; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturadet_producto_id_a075afcf ON public.fac_facturadet USING btree (producto_id);
+
+
+--
+-- TOC entry 3091 (class 1259 OID 16892)
+-- Name: fac_facturadet_usuario_crea_id_69f866b4; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturadet_usuario_crea_id_69f866b4 ON public.fac_facturadet USING btree (usuario_crea_id);
+
+
+--
+-- TOC entry 3092 (class 1259 OID 16893)
+-- Name: fac_facturadet_usuario_modifica_id_fadfcac1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturadet_usuario_modifica_id_fadfcac1 ON public.fac_facturadet USING btree (usuario_modifica_id);
+
+
+--
+-- TOC entry 3082 (class 1259 OID 16766)
+-- Name: fac_facturaenc_cliente_id_fa0d81cc; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturaenc_cliente_id_fa0d81cc ON public.fac_facturaenc USING btree (cliente_id);
+
+
+--
+-- TOC entry 3085 (class 1259 OID 16767)
+-- Name: fac_facturaenc_usuario_crea_id_2ca98e8a; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturaenc_usuario_crea_id_2ca98e8a ON public.fac_facturaenc USING btree (usuario_crea_id);
+
+
+--
+-- TOC entry 3086 (class 1259 OID 16768)
+-- Name: fac_facturaenc_usuario_modifica_id_beee1a2c; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fac_facturaenc_usuario_modifica_id_beee1a2c ON public.fac_facturaenc USING btree (usuario_modifica_id);
+
+
+--
+-- TOC entry 3057 (class 1259 OID 16649)
+-- Name: inv_bitacora_codigo_9cefb208_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_bitacora_codigo_9cefb208_like ON public.inv_bitacora USING btree (codigo varchar_pattern_ops);
+
+
+--
+-- TOC entry 3062 (class 1259 OID 16650)
+-- Name: inv_bitacora_subCategoria_id_007b7856; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "inv_bitacora_subCategoria_id_007b7856" ON public.inv_bitacora USING btree ("subCategoria_id");
+
+
+--
+-- TOC entry 3063 (class 1259 OID 16651)
+-- Name: inv_bitacora_uc_id_146deaeb; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_bitacora_uc_id_146deaeb ON public.inv_bitacora USING btree (uc_id);
+
+
+--
+-- TOC entry 3036 (class 1259 OID 16579)
+-- Name: inv_categoria_descripcion_dcbdcfab_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_categoria_descripcion_dcbdcfab_like ON public.inv_categoria USING btree (descripcion varchar_pattern_ops);
+
+
+--
+-- TOC entry 3041 (class 1259 OID 16580)
+-- Name: inv_categoria_uc_id_9fb7f4ed; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_categoria_uc_id_9fb7f4ed ON public.inv_categoria USING btree (uc_id);
+
+
+--
+-- TOC entry 3048 (class 1259 OID 16626)
+-- Name: inv_producto_codigo_731199fc_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_producto_codigo_731199fc_like ON public.inv_producto USING btree (codigo varchar_pattern_ops);
+
+
+--
+-- TOC entry 3055 (class 1259 OID 16627)
+-- Name: inv_producto_subCategoria_id_687eb333; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX "inv_producto_subCategoria_id_687eb333" ON public.inv_producto USING btree ("subCategoria_id");
+
+
+--
+-- TOC entry 3056 (class 1259 OID 16628)
+-- Name: inv_producto_uc_id_3a00368a; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_producto_uc_id_3a00368a ON public.inv_producto USING btree (uc_id);
+
+
+--
+-- TOC entry 3044 (class 1259 OID 16601)
+-- Name: inv_subcategoria_categoria_id_fb12995e; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_subcategoria_categoria_id_fb12995e ON public.inv_subcategoria USING btree (categoria_id);
+
+
+--
+-- TOC entry 3047 (class 1259 OID 16602)
+-- Name: inv_subcategoria_uc_id_98ebd747; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX inv_subcategoria_uc_id_98ebd747 ON public.inv_subcategoria USING btree (uc_id);
+
+
+--
+-- TOC entry 3064 (class 1259 OID 16670)
+-- Name: vnt_proveedor_descripcion_a6dc66e6_like; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_proveedor_descripcion_a6dc66e6_like ON public.vnt_proveedor USING btree (descripcion varchar_pattern_ops);
+
+
+--
+-- TOC entry 3069 (class 1259 OID 16671)
+-- Name: vnt_proveedor_uc_id_5be52dbc; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_proveedor_uc_id_5be52dbc ON public.vnt_proveedor USING btree (uc_id);
+
+
+--
+-- TOC entry 3076 (class 1259 OID 16718)
+-- Name: vnt_ventasdet_producto_id_43b0fe69; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_ventasdet_producto_id_43b0fe69 ON public.vnt_ventasdet USING btree (producto_id);
+
+
+--
+-- TOC entry 3077 (class 1259 OID 16719)
+-- Name: vnt_ventasdet_uc_id_bd0930d0; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_ventasdet_uc_id_bd0930d0 ON public.vnt_ventasdet USING btree (uc_id);
+
+
+--
+-- TOC entry 3078 (class 1259 OID 16720)
+-- Name: vnt_ventasdet_venta_id_bc92f798; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_ventasdet_venta_id_bc92f798 ON public.vnt_ventasdet USING btree (venta_id);
+
+
+--
+-- TOC entry 3072 (class 1259 OID 16701)
+-- Name: vnt_ventasenc_proveedor_id_b28398bc; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_ventasenc_proveedor_id_b28398bc ON public.vnt_ventasenc USING btree (proveedor_id);
+
+
+--
+-- TOC entry 3073 (class 1259 OID 16702)
+-- Name: vnt_ventasenc_uc_id_ae84dc18; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX vnt_ventasenc_uc_id_ae84dc18 ON public.vnt_ventasenc USING btree (uc_id);
+
+
+--
+-- TOC entry 3095 (class 2606 OID 16483)
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3094 (class 2606 OID 16478)
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3093 (class 2606 OID 16469)
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3097 (class 2606 OID 16498)
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3096 (class 2606 OID 16493)
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3099 (class 2606 OID 16512)
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3098 (class 2606 OID 16507)
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3100 (class 2606 OID 16533)
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3101 (class 2606 OID 16538)
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3115 (class 2606 OID 16729)
+-- Name: fac_cliente fac_cliente_uc_id_e29d1d93_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_cliente
+    ADD CONSTRAINT fac_cliente_uc_id_e29d1d93_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3119 (class 2606 OID 16870)
+-- Name: fac_facturadet fac_facturadet_factura_id_88bb956f_fk_fac_facturaenc_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturadet
+    ADD CONSTRAINT fac_facturadet_factura_id_88bb956f_fk_fac_facturaenc_id FOREIGN KEY (factura_id) REFERENCES public.fac_facturaenc(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3120 (class 2606 OID 16875)
+-- Name: fac_facturadet fac_facturadet_producto_id_a075afcf_fk_inv_producto_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturadet
+    ADD CONSTRAINT fac_facturadet_producto_id_a075afcf_fk_inv_producto_id FOREIGN KEY (producto_id) REFERENCES public.inv_producto(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3121 (class 2606 OID 16880)
+-- Name: fac_facturadet fac_facturadet_usuario_crea_id_69f866b4_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturadet
+    ADD CONSTRAINT fac_facturadet_usuario_crea_id_69f866b4_fk_auth_user_id FOREIGN KEY (usuario_crea_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3122 (class 2606 OID 16885)
+-- Name: fac_facturadet fac_facturadet_usuario_modifica_id_fadfcac1_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturadet
+    ADD CONSTRAINT fac_facturadet_usuario_modifica_id_fadfcac1_fk_auth_user_id FOREIGN KEY (usuario_modifica_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3116 (class 2606 OID 16751)
+-- Name: fac_facturaenc fac_facturaenc_cliente_id_fa0d81cc_fk_fac_cliente_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturaenc
+    ADD CONSTRAINT fac_facturaenc_cliente_id_fa0d81cc_fk_fac_cliente_id FOREIGN KEY (cliente_id) REFERENCES public.fac_cliente(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3117 (class 2606 OID 16756)
+-- Name: fac_facturaenc fac_facturaenc_usuario_crea_id_2ca98e8a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturaenc
+    ADD CONSTRAINT fac_facturaenc_usuario_crea_id_2ca98e8a_fk_auth_user_id FOREIGN KEY (usuario_crea_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3118 (class 2606 OID 16761)
+-- Name: fac_facturaenc fac_facturaenc_usuario_modifica_id_beee1a2c_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.fac_facturaenc
+    ADD CONSTRAINT fac_facturaenc_usuario_modifica_id_beee1a2c_fk_auth_user_id FOREIGN KEY (usuario_modifica_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3107 (class 2606 OID 16639)
+-- Name: inv_bitacora inv_bitacora_subCategoria_id_007b7856_fk_inv_subcategoria_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_bitacora
+    ADD CONSTRAINT "inv_bitacora_subCategoria_id_007b7856_fk_inv_subcategoria_id" FOREIGN KEY ("subCategoria_id") REFERENCES public.inv_subcategoria(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3108 (class 2606 OID 16644)
+-- Name: inv_bitacora inv_bitacora_uc_id_146deaeb_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_bitacora
+    ADD CONSTRAINT inv_bitacora_uc_id_146deaeb_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3102 (class 2606 OID 16574)
+-- Name: inv_categoria inv_categoria_uc_id_9fb7f4ed_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_categoria
+    ADD CONSTRAINT inv_categoria_uc_id_9fb7f4ed_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3105 (class 2606 OID 16614)
+-- Name: inv_producto inv_producto_subCategoria_id_687eb333_fk_inv_subcategoria_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_producto
+    ADD CONSTRAINT "inv_producto_subCategoria_id_687eb333_fk_inv_subcategoria_id" FOREIGN KEY ("subCategoria_id") REFERENCES public.inv_subcategoria(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3106 (class 2606 OID 16619)
+-- Name: inv_producto inv_producto_uc_id_3a00368a_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_producto
+    ADD CONSTRAINT inv_producto_uc_id_3a00368a_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3103 (class 2606 OID 16589)
+-- Name: inv_subcategoria inv_subcategoria_categoria_id_fb12995e_fk_inv_categoria_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_subcategoria
+    ADD CONSTRAINT inv_subcategoria_categoria_id_fb12995e_fk_inv_categoria_id FOREIGN KEY (categoria_id) REFERENCES public.inv_categoria(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3104 (class 2606 OID 16594)
+-- Name: inv_subcategoria inv_subcategoria_uc_id_98ebd747_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.inv_subcategoria
+    ADD CONSTRAINT inv_subcategoria_uc_id_98ebd747_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3109 (class 2606 OID 16665)
+-- Name: vnt_proveedor vnt_proveedor_uc_id_5be52dbc_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_proveedor
+    ADD CONSTRAINT vnt_proveedor_uc_id_5be52dbc_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3112 (class 2606 OID 16703)
+-- Name: vnt_ventasdet vnt_ventasdet_producto_id_43b0fe69_fk_inv_producto_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasdet
+    ADD CONSTRAINT vnt_ventasdet_producto_id_43b0fe69_fk_inv_producto_id FOREIGN KEY (producto_id) REFERENCES public.inv_producto(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3113 (class 2606 OID 16708)
+-- Name: vnt_ventasdet vnt_ventasdet_uc_id_bd0930d0_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasdet
+    ADD CONSTRAINT vnt_ventasdet_uc_id_bd0930d0_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3114 (class 2606 OID 16713)
+-- Name: vnt_ventasdet vnt_ventasdet_venta_id_bc92f798_fk_vnt_ventasenc_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasdet
+    ADD CONSTRAINT vnt_ventasdet_venta_id_bc92f798_fk_vnt_ventasenc_id FOREIGN KEY (venta_id) REFERENCES public.vnt_ventasenc(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3110 (class 2606 OID 16691)
+-- Name: vnt_ventasenc vnt_ventasenc_proveedor_id_b28398bc_fk_vnt_proveedor_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasenc
+    ADD CONSTRAINT vnt_ventasenc_proveedor_id_b28398bc_fk_vnt_proveedor_id FOREIGN KEY (proveedor_id) REFERENCES public.vnt_proveedor(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- TOC entry 3111 (class 2606 OID 16696)
+-- Name: vnt_ventasenc vnt_ventasenc_uc_id_ae84dc18_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.vnt_ventasenc
+    ADD CONSTRAINT vnt_ventasenc_uc_id_ae84dc18_fk_auth_user_id FOREIGN KEY (uc_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+-- Completed on 2021-06-08 22:10:26
+
+--
+-- PostgreSQL database dump complete
+--
+

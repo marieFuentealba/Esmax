@@ -8,13 +8,23 @@
                 {% csrf_token %}
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <a href="#" class="btn btn-danger">Guardar</a>
-                    <a href="{% url 'fac:factura_imprimir_one' enc.id %}" class="btn btn-success" target="_factura">Imprimir</a>
-                    <a href="{% url 'fac:factura_list' %}" class="btn btn-info">Cancelar</a>
+                    <h6 class="m-0 font-weight-bold">Agregar Nueva Factura</h6>
                 </div>
                 <div class="card-body">
                     <div class="content">
                         <!-- Sección Superior -->
+                        <div class="row">
+                            <div class="col-6">
+                                
+                            </div>
+                            <div class="col-6">
+                                <a href="{% url 'fac:factura_list' %}" class="btn btn-danger float-right btn-txt">Cancelar</a>
+                                <a href="#" class="btn  btn-info  float-right btn-txt">Guardar</a>
+                                <a href="{% url 'fac:factura_imprimir_one' enc.id %}" class="btn  btn-info  float-right btn-txt" target="_factura">Imprimir</a>
+                                
+                            </div>
+                        </div>
+                        <br><hr>
                         <div class="row">
                             <!-- Sección Izquierda -->
                             <div class="col-lg-6 form-group">
@@ -44,7 +54,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-lg-1 col-md-1">
-                                                    <button class="btn btn-outline-danger btn-sm" id="btnEditCliente"><i class="far fa-edit"></i></button>
+                                                    <button class="btn btn-outline-danger btn-sm" hidden id="btnEditCliente"><i class="far fa-edit"></i></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,7 +113,7 @@
                                         <input type="text" class="form-control" name="descripcion" id="descripcion" placeholder="Descripción" disabled>
                                     </div>
                                     <div class="col-lg-1">
-                                        <button type="button" class="btn btn-info" id="btnBuscarProducto">
+                                        <button type="button" class="btn btn-info btn-circle" id="btnBuscarProducto">
                                             <i class="fab fa-searchengin"></i>
                                         </button>
                                     </div>
@@ -121,7 +131,7 @@
                                         <input type="number" class="form-control" name="descuento_detalle" id="descuento_detalle" placeholder="Descuento">
                                     </div>
                                     <div class="col-lg-1">
-                                        <button type="submit" class="btn btn-danger" id="btnGuardar"> <i class="far fa-plus-square"></i> </button>
+                                        <button type="submit" class="btn btn-info btn-circle" id="btnGuardar"> <i class="far fa-plus-square"></i> </button>
                                     </div>
                                 </div>
                                 <div class="row p-1">

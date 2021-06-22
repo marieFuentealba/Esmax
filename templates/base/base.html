@@ -53,19 +53,12 @@
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
-      <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="{# 'bases:home' #}">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider">
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Administración
+        Recursos
       </div>
 
       <!-- Nav Item - Pages Collapse Menu 
@@ -128,11 +121,6 @@
       {% endif %}
 
 
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'fac:factura_list' %}">
-          <i class="fas fa-box-open"></i>
-          <span>Listado de Facturación</span></a>
-      </li>
 
 
    
@@ -148,7 +136,7 @@
 
       <!-- Heading -->
       <div class="sidebar-heading">
-        Addons
+        Contabilidad
       </div>
 
       <!-- Nav Item - Pages Collapse Menu 
@@ -181,8 +169,15 @@
 
       <li class="nav-item">
         <a class="nav-link"  href="{% url 'vnt:ventas_list' %}">
-          <i class="far fa-calendar-alt"></i>
+          <i class="fas fa-dollar-sign"></i>
           <span>Ventas</span></a>
+      </li>
+
+      
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'fac:factura_list' %}">
+          <i class="fas fa-clipboard-check"></i>
+          <span>Listado de Facturación</span></a>
       </li>
 
       {% endif %}
@@ -214,7 +209,7 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
+          <!-- Topbar Search 
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -224,7 +219,7 @@
                 </button>
               </div>
             </div>
-          </form>
+          </form>-->
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
